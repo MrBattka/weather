@@ -85,7 +85,9 @@ const styles = StyleSheet.create({
     weekday: {
         fontSize: 20,
         fontWeight: '500',
-        color: 'white'
+        color: 'white',
+        textShadowColor: '#4a4a4a',
+        textShadowRadius: 10
     },
     wrapperForecast: {
         flexDirection: 'row',

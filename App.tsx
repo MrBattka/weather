@@ -19,8 +19,8 @@ const App = () => {
   const currDay = date.getDay()
   
 
-  const dayBg = <Image style={styles.background} source={require('./assets/day1.png')} />
-  const nightBg = <Image style={styles.background} source={require('./assets/night.png')} />
+  const dayBg = <Image style={styles.background}  source={require('./assets/day.jpg')} />
+  const nightBg = <Image style={styles.background} source={require('./assets/night.jpg')} />
 
   return (
     <View style={styles.container}>
@@ -54,19 +54,25 @@ const styles = StyleSheet.create({
     paddingBottom: 60
   },
   city: {
-    fontSize: 25,
+    fontSize: 27,
     fontWeight: '200',
-    color: 'white'
+    color: 'white',
+    letterSpacing: 1,
+    textShadowColor: 'gray',
+    textShadowRadius: 10
   },
   temperature: {
     fontSize: 70,
     fontWeight: '700',
+    color: 'white',
+    textShadowColor: 'gray',
+    textShadowRadius: 10
   },
   wrapperWeek: {
     height: '52%',
     alignItems: 'flex-start',
     justifyContent: 'space-around',
-    marginLeft: 40
+    marginLeft: 40,
   },
 });
 
