@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Text, View } from 'react-native'
+import { ActivityIndicator, Image, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 
 type ForecastType = {
@@ -55,7 +55,9 @@ const Forecast = ({ forecast, currDay }: ForecastType) => {
                 <View style={styles.forecastTemp}>
                     {forecast.map((f: any, i: number) => (
                         <View key={i}>
-                            <Text style={styles.temp}>{Math.round(f.day.avgtemp_c)}°</Text>
+                            {!f.day.condition.icon ?
+                                <ActivityIndicator size='large' color='#0000ff' /> :
+                                <Text style={styles.temp}>{Math.round(f.day.avgtemp_c)}°</Text>}
                         </View>
                     ))}
                 </View>

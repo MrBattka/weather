@@ -1,11 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Image, StyleSheet, Text, View } from 'react-native';
 import { getCurrentTemp, getForecast, getIsDay } from './api/api';
 import Forecast from './components/Forecast/Forecast';
 
 const App = () => {
-  const [currTemp, setCurrTemp] = useState(Number)
+  const [currTemp, setCurrTemp] = useState('')
   const [isDay, setIsDay] = useState('')
   const [forecast, setForecast] = useState([])
 
@@ -17,9 +17,12 @@ const App = () => {
 
   const date = new Date()
   const currDay = date.getDay()
-  
 
-  const dayBg = <Image style={styles.background}  source={require('./assets/day.jpg')} />
+  if (!isDay) {
+    return <ActivityIndicator style={styles.preloader} size='large' color='#0000ff' />
+  }
+
+  const dayBg = <Image style={styles.background} source={require('./assets/day.jpg')} />
   const nightBg = <Image style={styles.background} source={require('./assets/night.jpg')} />
 
   return (
@@ -32,6 +35,7 @@ const App = () => {
       <View style={styles.wrapperWeek}>
         <Forecast currDay={currDay} forecast={forecast} />
       </View>
+
       <StatusBar style="auto" />
     </View>
   );
@@ -41,6 +45,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff'
+  },
+  preloader: {
+    flex: 1
   },
   background: {
     position: 'absolute',
