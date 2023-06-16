@@ -18,7 +18,7 @@ const App = () => {
   const date = new Date()
   const currDay = date.getDay()
 
-  if (!isDay) {
+  if (!forecast.length) {
     return <ActivityIndicator style={styles.preloader} size='large' color='#0000ff' />
   }
 
