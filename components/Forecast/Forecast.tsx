@@ -34,32 +34,6 @@ const Forecast = ({ forecast, currDay }: ForecastType) => {
     const day5 = weekday(currDay + 5)
     const day6 = weekday(currDay + 6)
 
-    const isCurrDay = 0
-    const isCurrDay1 = 1
-    const isCurrDay2 = 2
-    const isCurrDay3 = 3
-    const isCurrDay4 = 4
-    const isCurrDay5 = 5
-    const isCurrDay6 = 6
-
-    const currWeekday = (day: number) => {
-        if (day === 0 || day === 7) {
-            return <Text style={styles.currDay}>Sunday</Text>
-        } else if (day === 1 || day === 8) {
-            return <Text style={styles.currDay}>Monday</Text>
-        } else if (day === 2 || day === 9) {
-            return <Text style={styles.currDay}>Thuesday</Text>
-        } else if (day === 3 || day === 10) {
-            return <Text style={styles.currDay}>Wednesday</Text>
-        } else if (day === 4 || day === 11) {
-            return <Text style={styles.currDay}>Thursday</Text>
-        } else if (day === 5 || day === 12) {
-            return <Text style={styles.currDay}>Friday</Text>
-        } else if (day === 6 || day === 13) {
-            return <Text style={styles.currDay}>Suturday</Text>
-        }
-    }
-
     const week = [day1, day2, day3, day4, day5, day6]
 
     const returnIcon = (url: string) => {
@@ -111,16 +85,16 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start'
     },
     weekday: {
-        fontSize: 20,
-        fontWeight: '500',
+        fontSize: 22,
+        fontWeight: '300',
         color: 'white',
         textShadowColor: '#4a4a4a',
-        textShadowRadius: 10
+        textShadowRadius: 10,
     },
     currDay: {
         fontSize: 22,
-        fontWeight: '800',
-        color: '#FF0000',
+        fontWeight: '700',
+        color: 'white',
         textShadowColor: '#4a4a4a',
         textShadowRadius: 10,
         letterSpacing: 1.5
