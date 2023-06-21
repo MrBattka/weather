@@ -1,5 +1,5 @@
 export type ForecastType = {
-    forecast: any
+    forecast: never[]
     currDay: number
 }
 
