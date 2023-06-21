@@ -3,8 +3,9 @@ import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, Image, StyleSheet, Text, View } from 'react-native';
 import { getCurrentTemp, getForecast, getIsDay } from './api/api';
 import Forecast from './components/Forecast/Forecast';
+import { AppStyleTypes, dateTypes } from './AppTypes';
 
-const App = () => {
+const App: React.FC = () => {
   const [currTemp, setCurrTemp] = useState('')
   const [isDay, setIsDay] = useState('')
   const [forecast, setForecast] = useState([])
@@ -15,15 +16,15 @@ const App = () => {
     getForecast(setForecast)
   }, [getCurrentTemp, getIsDay, getForecast])
 
-  const date = new Date()
-  const currDay = date.getDay()
- 
+  const date: dateTypes = new Date()
+  const currDay: number = date.getDay()
+
   if (!forecast.length) {
     return <ActivityIndicator style={styles.preloader} size='large' color='#0000ff' />
   }
 
-  const dayBg = <Image style={styles.background} source={require('./assets/day.jpg')} />
-  const nightBg = <Image style={styles.background} source={require('./assets/night.jpg')} />
+  const dayBg: React.ReactElement = <Image style={styles.background} source={require('./assets/day.jpg')} />
+  const nightBg: React.ReactElement = <Image style={styles.background} source={require('./assets/night.jpg')} />
 
   return (
     <View style={styles.container}>
@@ -36,12 +37,12 @@ const App = () => {
         <Forecast currDay={currDay} forecast={forecast} />
       </View>
 
-      <StatusBar style="auto" />
+      <StatusBar style="light" />
     </View>
   );
 }
 
-const styles = StyleSheet.create({
+const styles: AppStyleTypes = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff'

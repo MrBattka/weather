@@ -1,12 +1,8 @@
 import { ActivityIndicator, Image, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, { FC } from 'react'
+import { ForecastStylesTypes, ForecastType } from './ForecastTypes'
 
-type ForecastType = {
-    forecast: any
-    currDay: number
-}
-
-const weekday = (day: number) => {
+const weekday: Function = (day: number) => {
     if (day === 0 || day === 7) {
         return 'Sunday'
     } else if (day === 1 || day === 8) {
@@ -24,9 +20,8 @@ const weekday = (day: number) => {
     }
 }
 
-const Forecast = ({ forecast, currDay }: ForecastType) => {
+const Forecast: FC<ForecastType> = ({ forecast, currDay }) => {
 
-    const day = weekday(currDay)
     const day1 = weekday(currDay + 1)
     const day2 = weekday(currDay + 2)
     const day3 = weekday(currDay + 3)
@@ -36,7 +31,7 @@ const Forecast = ({ forecast, currDay }: ForecastType) => {
 
     const week = [day1, day2, day3, day4, day5, day6]
 
-    const returnIcon = (url: string) => {
+    const returnIcon: Function = (url: string) => {
         return <Image style={styles.icon} source={{ uri: `https:${url}` }} />
     }
 
@@ -73,7 +68,7 @@ const Forecast = ({ forecast, currDay }: ForecastType) => {
     )
 }
 
-const styles = StyleSheet.create({
+const styles: ForecastStylesTypes = StyleSheet.create({
     wrapper: {
         width: '100%',
         height: '100%',
@@ -82,10 +77,11 @@ const styles = StyleSheet.create({
     wrapperWeekdays: {
         flexDirection: 'column',
         justifyContent: 'space-around',
-        alignItems: 'flex-start'
+        alignItems: 'flex-start',
+        width: 115
     },
     weekday: {
-        fontSize: 22,
+        fontSize: 21,
         fontWeight: '300',
         color: 'white',
         textShadowColor: '#4a4a4a',
@@ -96,8 +92,7 @@ const styles = StyleSheet.create({
         fontWeight: '700',
         color: 'white',
         textShadowColor: '#4a4a4a',
-        textShadowRadius: 10,
-        letterSpacing: 1.5
+        textShadowRadius: 10
     },
     wrapperForecast: {
         flexDirection: 'row',
