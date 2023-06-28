@@ -1,26 +1,10 @@
-import { ActivityIndicator, Image, StyleSheet, Text, View } from 'react-native'
-import React, { FC } from 'react'
+import React, { FC, useCallback } from 'react'
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { ForecastStylesTypes, ForecastType } from './ForecastTypes'
+import { weekday } from '../../common/weatherOptions'
 
-const weekday: Function = (day: number) => {
-    if (day === 0 || day === 7) {
-        return 'Sunday'
-    } else if (day === 1 || day === 8) {
-        return 'Monday'
-    } else if (day === 2 || day === 9) {
-        return 'Thuesday'
-    } else if (day === 3 || day === 10) {
-        return 'Wednesday'
-    } else if (day === 4 || day === 11) {
-        return 'Thursday'
-    } else if (day === 5 || day === 12) {
-        return 'Friday'
-    } else if (day === 6 || day === 13) {
-        return 'Suturday'
-    }
-}
-
-const Forecast: FC<ForecastType> = ({ forecast, currDay }) => {
+const Forecast: FC<ForecastType> = ({ forecast, currDay, isOpenForestForDay, setIsOpenForestForDay,
+    selectDay, setSelectDay, wheatherCode, returnIcon }) => {
 
     const day1 = weekday(currDay + 1)
     const day2 = weekday(currDay + 2)
@@ -31,10 +15,10 @@ const Forecast: FC<ForecastType> = ({ forecast, currDay }) => {
 
     const week = [day1, day2, day3, day4, day5, day6]
 
-    const returnIcon: Function = (url: string) => {
-        return <Image style={styles.icon} source={{ uri: `https:${url}` }} />
-    }
-
+    const openSelectDay = useCallback((i: number) => {
+        setIsOpenForestForDay(!isOpenForestForDay)
+        setSelectDay(i)
+    }, [setIsOpenForestForDay])
 
     return (
         <View style={styles.wrapper}>
@@ -50,16 +34,17 @@ const Forecast: FC<ForecastType> = ({ forecast, currDay }) => {
                 <View style={styles.forecastTemp}>
                     {forecast.map((f: any, i: number) => (
                         <View key={i}>
-                            {!f.day.condition.icon ?
-                                <ActivityIndicator size='large' color='#0000ff' /> :
-                                <Text style={styles.temp}>{Math.round(f.day.avgtemp_c)}°</Text>}
+                            <Text style={styles.temp}>{Math.floor(f)}°</Text>
                         </View>
                     ))}
                 </View>
                 <View style={styles.forecastIcon}>
-                    {forecast.map((ic: any, i: number) => (
-                        <View key={i}>
-                            {returnIcon(ic.day.condition.icon)}
+                    {wheatherCode.map((p, i) => (
+                        <View key={i} style={styles.wrapperIcon}>
+                            {returnIcon(p)}
+                            <TouchableOpacity onPress={() => openSelectDay(i)}>
+                                <Text style={styles.goToForecastForDay}>ᐳ</Text>
+                            </TouchableOpacity>
                         </View>
                     ))}
                 </View>
@@ -105,19 +90,29 @@ const styles: ForecastStylesTypes = StyleSheet.create({
         alignItems: 'flex-start'
     },
     temp: {
-        fontSize: 25,
-        marginRight: 10,
+        fontSize: 22,
+        marginRight: 15,
         color: 'white',
         fontWeight: '700'
     },
     forecastIcon: {
         flexDirection: 'column',
         justifyContent: 'space-around',
-        alignItems: 'flex-start'
+        alignItems: 'flex-start',
+    },
+    wrapperIcon: {
+        flexDirection: 'row'
     },
     icon: {
-        width: 40,
-        height: 35
+        width: 30,
+        height: 30,
+        marginRight: 10,
+        alignItems: 'center',
+
+    },
+    goToForecastForDay: {
+        fontSize: 21,
+        color: 'white'
     }
 })
 
