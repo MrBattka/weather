@@ -1,14 +1,14 @@
+import * as Location from 'expo-location';
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, Image, StyleSheet, Text, View } from 'react-native';
 import { AppStyleTypes, dataTypes, dateTypes } from './AppTypes';
-import { getCurrentTemp, getForecast, getIsDay, getPrecipitation, getTempApparentForDay, getTempForecastForDay, getTimeForecastForDay, getWheatherCode, getWheatherCodeForHourly, getWindSpeedForDay, getWindSpeedForHourly } from './api/api';
+import { getCurrentTemp, getForecast, getIsDay, getLocation, getPrecipitation, getTempApparentForDay, getTempForecastForDay, getTimeForecastForDay, getWheatherCode, getWheatherCodeForHourly, getWindSpeedForDay, getWindSpeedForHourly } from './api/api';
 import Forecast from './components/Forecast/Forecast';
 import ForecastForDay from './components/ForecastForDay/ForecastForDay';
 
 const App: React.FC = () => {
 
-  const [currTemp, setCurrTemp] = useState('')
   const [isDay, setIsDay] = useState('')
   const [forecast, setForecast] = useState([])
   const [wheatherCode, setWheatherCode] = useState([])
@@ -28,20 +28,22 @@ const App: React.FC = () => {
   const [precipitationDay, setPrecipitationDay] = useState(null)
   const [tempApparentForecastDay, setTempApparentForecastDay] = useState(null)
   const [tempApparentDay, setTempApparentDay] = useState(null)
+  const [location, setLication] = useState<Location.LocationObjectCoords>()
+  const [geo, setGeo] = useState(null)
 
   useEffect(() => {
-    getCurrentTemp(setCurrTemp)
     getIsDay(setIsDay)
-    getForecast(setForecast)
-    getTimeForecastForDay(setTimeForecastForDay)
-    getTempForecastForDay(setTempForecastForDay)
-    getWheatherCode(setWheatherCode)
-    getWheatherCodeForHourly(setWeatherCodeForDay)
-    getWindSpeedForHourly(setWindSpeedForecastHourly)
-    getPrecipitation(setPrecipitationForecastDay)
-    getWindSpeedForDay(setWindSpeedForecastDay)
-    getTempApparentForDay(setTempApparentForecastDay)
-  }, [getCurrentTemp, getIsDay, getForecast])
+    getForecast(setForecast, location?.latitude, location?.longitude)
+    getTimeForecastForDay(setTimeForecastForDay, location?.latitude, location?.longitude)
+    getTempForecastForDay(setTempForecastForDay, location?.latitude, location?.longitude)
+    getWheatherCode(setWheatherCode, location?.latitude, location?.longitude)
+    getWheatherCodeForHourly(setWeatherCodeForDay, location?.latitude, location?.longitude)
+    getWindSpeedForHourly(setWindSpeedForecastHourly, location?.latitude, location?.longitude)
+    getPrecipitation(setPrecipitationForecastDay, location?.latitude, location?.longitude)
+    getWindSpeedForDay(setWindSpeedForecastDay, location?.latitude, location?.longitude)
+    getTempApparentForDay(setTempApparentForecastDay, location?.latitude, location?.longitude)
+    getLocation(setGeo, location?.latitude, location?.longitude)
+  }, [getCurrentTemp, getIsDay, getForecast, typeof location === 'object', typeof geo === 'object'])
 
   useEffect(() => {
     setHourly(timeforecastForDay)
@@ -53,12 +55,26 @@ const App: React.FC = () => {
     setPrecipitationDay(precipitationForecastDay)
   }, [isOpenForestForDay])
 
+  useEffect(() => {
+    const getPermissions = async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync()
+      if (status !== 'granted') {
+        console.log('Please grant location permissions');
+        return
+      }
+
+      let currentLocation = await Location.getCurrentPositionAsync({})
+      setLication(currentLocation.coords)
+    }
+    getPermissions()
+  }, [])
+
   const date: dateTypes = new Date()
   const currDay: number = date.getDay()
 
   const currHour: string = date.getHours().toString()
 
-  if (!forecast.length) {
+  if (!geo && typeof location === 'undefined') {
     return <ActivityIndicator style={styles.preloader} size='large' color='#0000ff' />
   }
 
@@ -94,6 +110,7 @@ const App: React.FC = () => {
     <View style={styles.container}>
       {isDay ? dayBg : nightBg}
       {isOpenForestForDay ?
+
         <View style={styles.wrapperForecastForDay}>
           {hourly && <ForecastForDay isOpenForestForDay={isOpenForestForDay} setIsOpenForestForDay={setIsOpenForestForDay}
             selectDay={selectDay} hourly={hourly} setHourly={setHourly} currHour={currHour}
@@ -104,10 +121,11 @@ const App: React.FC = () => {
             setPrecipitationDay={setPrecipitationDay} tempApparentDay={tempApparentDay}
             setTempApparentDay={setTempApparentDay} currDay={currDay} />}
         </View> :
+
         <View style={styles.wrapperMainPage}>
           <View style={styles.wrapperTitle}>
-            <Text style={styles.city}>Севастополь</Text>
-            <Text style={styles.temperature}>{currTemp}°</Text>
+            <Text style={styles.city}>{geo}</Text>
+            <Text style={styles.temperature}>{forecast[0]}°</Text>
           </View>
           <View style={styles.wrapperWeek}>
             <Forecast currDay={currDay} forecast={forecast} returnIcon={returnIcon}
