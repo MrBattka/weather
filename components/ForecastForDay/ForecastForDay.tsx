@@ -1,12 +1,12 @@
 import React, { FC, useEffect, useState } from 'react'
 import { ActivityIndicator, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import { currData, currDataForDay, currWindForDay, isConditionForCurrDay } from '../../common/weatherOptions'
-import { ForecastForDayTypes } from './ForecastForDayTypes'
+import { currData, currDataForDay, currToDay, currWindForDay, isConditionForCurrDay, kmHInMS } from '../../common/weatherHelpers'
+import { ForecastForDayStylesTypes, ForecastForDayTypes } from './ForecastForDayTypes'
 
 const ForecastForDay: FC<ForecastForDayTypes> = ({ isOpenForestForDay, setIsOpenForestForDay,
     selectDay, hourly, setHourly, currHour, tempHourly, setTempHourly, returnIcon, wheatherCode,
     wheatherCodeHorly, setWheatherCodeHorly, windSpeedHourly, setWindSpeedHourly, windSpeedDay,
-    setWindSpeedDay, precipitationDay, setPrecipitationDay, tempApparentDay,
+    setWindSpeedDay, precipitationDay, setPrecipitationDay, tempApparentDay, currDay,
     setTempApparentDay }): React.ReactElement => {
 
     const [currForecastDay, setCurrForecastDay] = useState([])
@@ -18,7 +18,7 @@ const ForecastForDay: FC<ForecastForDayTypes> = ({ isOpenForestForDay, setIsOpen
         return <ActivityIndicator style={styles.preloader} size='large' color='#0000ff' />
     }
 
-    const backToMainPage = () => {
+    const backToMainPage: () => void = () => {
         setIsOpenForestForDay(!isOpenForestForDay)
         setHourly(null)
         setTempHourly(null)
@@ -52,20 +52,20 @@ const ForecastForDay: FC<ForecastForDayTypes> = ({ isOpenForestForDay, setIsOpen
         <Image style={styles.icon} source={require('../../assets/forecastForDayCondition/snow.jpg')} />
 
 
-    const isCurrHour = (currHour: string, hour: string) => {
+    const isCurrHour = (currHour: string, hour: string): boolean => {
         const sliceHour = hour.slice(11, 13)
         return sliceHour == currHour
     }
 
     return (
         <View style={styles.wrapper}>
-            <TouchableOpacity style={styles.back} onPress={() => backToMainPage()}>
+            <TouchableOpacity style={styles.back} onPress={(event) => backToMainPage()}>
                 <Text style={styles.backBtn}>{'< Back'}</Text>
             </TouchableOpacity>
             <View style={styles.currWeather}>
                 {isConditionForCurrDay(selectDay, wheatherCode) === 'Ясно' && sunnyImg}
-                {isConditionForCurrDay(selectDay, wheatherCode) === 'Пасмурная погода' && cloudyImg}
-                {isConditionForCurrDay(selectDay, wheatherCode) === 'Переменная облачность' && cloudyImg}
+                {isConditionForCurrDay(selectDay, wheatherCode) === 'Пасмурно' && cloudyImg}
+                {isConditionForCurrDay(selectDay, wheatherCode) === 'Облачно' && cloudyImg}
                 {isConditionForCurrDay(selectDay, wheatherCode) === 'Дождь' && rainImg}
                 {isConditionForCurrDay(selectDay, wheatherCode) === 'Ледяной дождь' && rainImg}
                 {isConditionForCurrDay(selectDay, wheatherCode) === 'Гроза' && thunderyOutbreaksImg}
@@ -74,12 +74,14 @@ const ForecastForDay: FC<ForecastForDayTypes> = ({ isOpenForestForDay, setIsOpen
                 {isConditionForCurrDay(selectDay, wheatherCode) === 'Туман' && mistImg}
 
                 <Text style={styles.currTemp}>{tempForecastDay[0]}°</Text>
-                <Text style={styles.condition}>{isConditionForCurrDay(selectDay, wheatherCode)}</Text>
-
+                <Text style={styles.condition}>
+                    {isConditionForCurrDay(selectDay, wheatherCode)}  |  {currToDay(selectDay, currDay)}
+                </Text>
                 <View style={styles.currAddInfo}>
                     <View style={styles.blockAddInfo}>
                         <Text style={styles.titleAddInfo}>Ветер</Text>
-                        <Text style={styles.valueAddInfo}>{currWindForDay(windSpeedDay, selectDay)} <Text style={styles.measureUnit}>m/s </Text></Text>
+                        <Text style={styles.valueAddInfo}>
+                            {currWindForDay(windSpeedDay, selectDay)} <Text style={styles.measureUnit}>m/s </Text></Text>
                     </View>
                     <View style={styles.blockAddInfo}>
                         <Text style={styles.titleAddInfo}>Осадки</Text>
@@ -94,13 +96,17 @@ const ForecastForDay: FC<ForecastForDayTypes> = ({ isOpenForestForDay, setIsOpen
             <ScrollView style={styles.hourlyForecast}>
                 <View style={styles.wrapperHourlyForecast}>
                     <View>
+                    <View style={styles.titleItem}><Text style={styles.item}>Время</Text></View>
                         {currForecastDay.map((c: string, i) => (
                             <View style={styles.wrapperHours} key={i}>
-                                <Text style={isCurrHour(currHour, c) ? styles.currItem : styles.item}>{c.slice(11, 16)}</Text>
+                                <Text style={isCurrHour(currHour, c) && selectDay === 0 ? styles.currItem : styles.item}>
+                                    {c.slice(11, 16)}
+                                </Text>
                             </View>
                         ))}
                     </View>
                     <View>
+                    <View style={styles.titleItem}><Text style={styles.item}>Темп</Text></View>
                         {tempForecastDay.map((currTemp, i) => (
                             <View style={styles.wrapperHours} key={i}>
                                 <Text style={styles.item}>{currTemp}°</Text>
@@ -108,13 +114,17 @@ const ForecastForDay: FC<ForecastForDayTypes> = ({ isOpenForestForDay, setIsOpen
                         ))}
                     </View>
                     <View>
-                        {windSpeedForecastDay.map((windS, i) => (
+                    <View style={styles.titleItem}><Text style={styles.item}>Ветер</Text></View>
+                        {windSpeedForecastDay.map((winds, i) => (
                             <View style={styles.wrapperHours} key={i}>
-                                <Text style={styles.item}>{windS} <Text style={styles.measureUnit}>km/h</Text></Text>
+                                <Text style={styles.item}>
+                                    {kmHInMS(winds)} <Text style={styles.measureUnit}>м/с</Text>
+                                </Text>
                             </View>
                         ))}
                     </View>
                     <View>
+                        <View style={styles.titleItem}><Text style={styles.item}>Погода</Text></View>
                         {weatherCodeForecastDay.map((code, i) => (
                             <View style={styles.wrapperIconCondition} key={i}>
                                 {returnIcon(code)}
@@ -127,7 +137,7 @@ const ForecastForDay: FC<ForecastForDayTypes> = ({ isOpenForestForDay, setIsOpen
     )
 }
 
-const styles = StyleSheet.create({
+const styles: ForecastForDayStylesTypes = StyleSheet.create({
     wrapper: {
         height: '100%'
     },
@@ -167,8 +177,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderRightWidth: 0.6,
         borderColor: 'white',
-        paddingRight: 47,
-        paddingLeft: 30
+        paddingRight: 45,
+        marginLeft: 10
     },
     blockAddInfoLastChild: {
         alignItems: 'center',
@@ -204,15 +214,15 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
         width: 72
     },
-    wrapperItem: {
-        width: 70
+    titleItem: {
+        marginTop: 15
     },
     item: {
         fontSize: 18,
         color: 'white'
     },
     currItem: {
-        fontSize: 18,
+        fontSize: 19,
         color: 'white',
         fontWeight: '900',
     },
@@ -226,12 +236,10 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         alignItems: 'flex-start',
         justifyContent: 'space-around',
-        width: 30,
+        width: 10,
+        marginLeft: 15,
         height: 35,
         marginTop: 15,
-    },
-    conditionTxt: {
-        marginRight: 22
     },
     title: {
         fontSize: 20,

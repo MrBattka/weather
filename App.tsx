@@ -7,6 +7,7 @@ import Forecast from './components/Forecast/Forecast';
 import ForecastForDay from './components/ForecastForDay/ForecastForDay';
 
 const App: React.FC = () => {
+
   const [currTemp, setCurrTemp] = useState('')
   const [isDay, setIsDay] = useState('')
   const [forecast, setForecast] = useState([])
@@ -101,16 +102,16 @@ const App: React.FC = () => {
             windSpeedHourly={windSpeedHourly} setWindSpeedHourly={setWindSpeedHourly}
             windSpeedDay={windSpeedDay} setWindSpeedDay={setWindSpeedDay} precipitationDay={precipitationDay}
             setPrecipitationDay={setPrecipitationDay} tempApparentDay={tempApparentDay}
-            setTempApparentDay={setTempApparentDay} />}
+            setTempApparentDay={setTempApparentDay} currDay={currDay} />}
         </View> :
         <View style={styles.wrapperMainPage}>
           <View style={styles.wrapperTitle}>
-            <Text style={styles.city}>Sevastopol</Text>
+            <Text style={styles.city}>Севастополь</Text>
             <Text style={styles.temperature}>{currTemp}°</Text>
           </View>
           <View style={styles.wrapperWeek}>
             <Forecast currDay={currDay} forecast={forecast} returnIcon={returnIcon}
-              selectDay={selectDay} setSelectDay={setSelectDay} wheatherCode={wheatherCode}
+              setSelectDay={setSelectDay} wheatherCode={wheatherCode}
               isOpenForestForDay={isOpenForestForDay} setIsOpenForestForDay={setIsOpenForestForDay} />
           </View>
         </View>}
@@ -168,7 +169,7 @@ const styles: AppStyleTypes = StyleSheet.create({
   icon: {
     width: 30,
     height: 30,
-    marginRight: 10,
+    marginRight: 17,
     alignItems: 'center',
   },
 });

@@ -1,24 +1,24 @@
 import React, { FC, useCallback } from 'react'
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { weekday } from '../../common/weatherHelpers'
 import { ForecastStylesTypes, ForecastType } from './ForecastTypes'
-import { weekday } from '../../common/weatherOptions'
 
 const Forecast: FC<ForecastType> = ({ forecast, currDay, isOpenForestForDay, setIsOpenForestForDay,
-    selectDay, setSelectDay, wheatherCode, returnIcon }) => {
+    setSelectDay, wheatherCode, returnIcon }) => {
 
-    const day1 = weekday(currDay + 1)
-    const day2 = weekday(currDay + 2)
-    const day3 = weekday(currDay + 3)
-    const day4 = weekday(currDay + 4)
-    const day5 = weekday(currDay + 5)
-    const day6 = weekday(currDay + 6)
+    const day1: number = weekday(currDay + 1)
+    const day2: number = weekday(currDay + 2)
+    const day3: number = weekday(currDay + 3)
+    const day4: number = weekday(currDay + 4)
+    const day5: number = weekday(currDay + 5)
+    const day6: number = weekday(currDay + 6)
 
-    const week = [day1, day2, day3, day4, day5, day6]
+    const week: number[] = [day1, day2, day3, day4, day5, day6]
 
     const openSelectDay = useCallback((i: number) => {
         setIsOpenForestForDay(!isOpenForestForDay)
         setSelectDay(i)
-    }, [setIsOpenForestForDay])
+    }, [setIsOpenForestForDay, setSelectDay])
 
     return (
         <View style={styles.wrapper}>
@@ -63,7 +63,7 @@ const styles: ForecastStylesTypes = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'space-around',
         alignItems: 'flex-start',
-        width: 115
+        width: 135
     },
     weekday: {
         fontSize: 21,
@@ -82,7 +82,7 @@ const styles: ForecastStylesTypes = StyleSheet.create({
     wrapperForecast: {
         flexDirection: 'row',
         justifyContent: 'flex-end',
-        width: '65%'
+        width: '60%'
     },
     forecastTemp: {
         flexDirection: 'column',
@@ -102,13 +102,6 @@ const styles: ForecastStylesTypes = StyleSheet.create({
     },
     wrapperIcon: {
         flexDirection: 'row'
-    },
-    icon: {
-        width: 30,
-        height: 30,
-        marginRight: 10,
-        alignItems: 'center',
-
     },
     goToForecastForDay: {
         fontSize: 21,

@@ -1,26 +1,11 @@
 
-export const sunnyOption: string[] = ['Sunny', 'Partly cloudy']
-export const cloudyOption: string[] = ['Cloudy', 'Overcast']
-export const rainOption: string[] = ['Patchy rain possible', 'Patchy freezing drizzle possible', 'Patchy light drizzle',
-    'Light drizzle', 'Freezing drizzle', 'Heavy freezing drizzle', 'Patchy light rain', 'Moderate rain at times',
-    'Moderate rain', 'Heavy rain at times', 'Heavy rain', 'Heavy rain', 'Moderate or heavy freezing rain',
-    'Light rain shower', 'Moderate or heavy rain shower', 'Torrential rain shower', 'Light sleet showers',
-    'Moderate or heavy sleet showers']
-export const rainWithThunderOption: string[] = ['Patchy light rain with thunder', 'Moderate or heavy rain with thunder']
-export const snowOption: string[] = ['Moderate or heavy showers of ice pellets', 'Light showers of ice pellets', 'Moderate or heavy snow showers',
-    'Light snow showers', 'Ice pellets', 'Heavy snow', 'Patchy heavy snow', 'Light snow', 'Patchy light snow'
-    , 'Moderate snow', 'Moderate or heavy sleet', ': Light sleet', 'Blowing snows', 'Patchy sleet possible',
-    'Patchy snow possible', 'Blizzard']
-export const thunderyOutbreaksOption: string[] = ['Thundery outbreaks possible', 'Patchy light snow with thunder', 'Moderate or heavy snow with thunder']
-export const mistOption: string[] = ['Mist', 'Fog', 'Freezing fog']
-
-export const isCondition = (weatherCode: number) => {
+export const isCondition: Function = (weatherCode: number) => {
     if (weatherCode === 0 || weatherCode === 1) {
         return 'Ясно'
     } else if (weatherCode === 2) {
-        return 'Переменная облачность'
+        return 'Облачно'
     } else if (weatherCode === 3) {
-        return 'Пасмурная погода'
+        return 'Пасмурно'
     } else if (weatherCode === 45 || weatherCode === 48) {
         return 'Туман'
     } else if (weatherCode === 51 || weatherCode === 53 || weatherCode === 55 ||
@@ -41,23 +26,23 @@ export const isCondition = (weatherCode: number) => {
 
 export const weekday: Function = (day: number) => {
     if (day === 0 || day === 7) {
-        return 'Sunday'
+        return 'Воскресенье'
     } else if (day === 1 || day === 8) {
-        return 'Monday'
+        return 'Понедельник'
     } else if (day === 2 || day === 9) {
-        return 'Thuesday'
+        return 'Вторник'
     } else if (day === 3 || day === 10) {
-        return 'Wednesday'
+        return 'Среда'
     } else if (day === 4 || day === 11) {
-        return 'Thursday'
+        return 'Четверг'
     } else if (day === 5 || day === 12) {
-        return 'Friday'
+        return 'Пятница'
     } else if (day === 6 || day === 13) {
-        return 'Suturday'
+        return 'Суббота'
     }
 }
 
-export const isConditionForCurrDay = (selectDay: number, wheatherCode: never[]) => {
+export const isConditionForCurrDay: Function = (selectDay: number, wheatherCode: never[]) => {
     if (selectDay === 0) {
         return isCondition(wheatherCode[0])
     } else if (selectDay === 1) {
@@ -75,7 +60,7 @@ export const isConditionForCurrDay = (selectDay: number, wheatherCode: never[]) 
     }
 }
 
-export const currData = (data: any, selectDay: number, callback: any) => {
+export const currData: Function = (data: never[], selectDay: number, callback: CallableFunction) => {
     if (selectDay === 0) {
         return callback(data.slice(0, 24))
     } else if (selectDay === 1) {
@@ -93,12 +78,30 @@ export const currData = (data: any, selectDay: number, callback: any) => {
     }
 }
 
-const kmHInMS = (num: number) => {
+export const currToDay: Function = (selectDay: number, currDay: number) => {
+    if (selectDay === 0) {
+        return weekday(currDay)
+    } else if (selectDay === 1) {
+        return weekday(currDay + 1)
+    } else if (selectDay === 2) {
+        return weekday(currDay + 2)
+    } else if (selectDay === 3) {
+        return weekday(currDay + 3)
+    } else if (selectDay === 4) {
+        return weekday(currDay + 4)
+    } else if (selectDay === 5) {
+        return weekday(currDay + 5)
+    } else if (selectDay === 6) {
+        return weekday(currDay + 6)
+    }
+}
+
+export const kmHInMS: Function = (num: number): string => {
     const result = num / 3600 * 1000
     return result.toFixed(1)
 }
 
-export const currWindForDay = (data: any, selectDay: number) => {
+export const currWindForDay: Function = (data: never[], selectDay: number) => {
     if (selectDay === 0) {
         return kmHInMS(data[0])
     } else if (selectDay === 1) {
@@ -116,7 +119,7 @@ export const currWindForDay = (data: any, selectDay: number) => {
     }
 }
 
-export const currDataForDay = (data: any, selectDay: number) => {
+export const currDataForDay: Function = (data: never[], selectDay: number) => {
     if (selectDay === 0) {
         return data[0]
     } else if (selectDay === 1) {

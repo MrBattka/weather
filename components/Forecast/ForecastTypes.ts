@@ -5,7 +5,6 @@ export type ForecastType = {
     currDay: number
     isOpenForestForDay: boolean
     setIsOpenForestForDay: React.Dispatch<React.SetStateAction<boolean>>
-    selectDay: number
     setSelectDay: React.Dispatch<React.SetStateAction<number>>
     wheatherCode: never[]
     returnIcon: Function
@@ -21,6 +20,5 @@ export type ForecastStylesTypes = {
     temp: object
     forecastIcon: object
     wrapperIcon: object
-    icon: object
     goToForecastForDay: object
 }

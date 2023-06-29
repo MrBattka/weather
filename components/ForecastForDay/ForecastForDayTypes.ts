@@ -21,4 +21,33 @@ export type ForecastForDayTypes = {
     setPrecipitationDay: React.Dispatch<React.SetStateAction<null>>
     tempApparentDay: null
     setTempApparentDay: React.Dispatch<React.SetStateAction<null>>
+    currDay: number
+}
+
+export type ForecastForDayStylesTypes = {
+    wrapper: object
+    icon: object
+    preloader: object
+    currWeather: object
+    currTemp: object
+    condition: object
+    currAddInfo: object
+    blockAddInfo: object
+    blockAddInfoLastChild: object
+    titleAddInfo: object
+    valueAddInfo: object
+    measureUnit: object
+    wrapperHourlyForecast: object
+    hourlyForecast: object
+    wrapperHours: object
+    titleItem: object
+    item: object
+    currItem: object
+    subItem: object
+    wrapperIcon: object
+    wrapperIconCondition: object
+    title: object
+    back: object
+    backBtn: object
+    txt: object
 }
