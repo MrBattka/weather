@@ -173,10 +173,8 @@ const styles: AppStyleTypes = StyleSheet.create({
   },
   temperature: {
     fontSize: 70,
-    fontWeight: '700',
-    color: 'white',
-    textShadowColor: 'gray',
-    textShadowRadius: 10
+    fontWeight: '500',
+    color: 'white'
   },
   wrapperWeek: {
     height: '52%',

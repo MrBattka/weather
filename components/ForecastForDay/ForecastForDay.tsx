@@ -37,19 +37,19 @@ const ForecastForDay: FC<ForecastForDayTypes> = ({ isOpenForestForDay, setIsOpen
     }, [isOpenForestForDay])
 
     const sunnyImg: React.ReactElement =
-        <Image style={styles.icon} source={require('../../assets/forecastForDayCondition/sunny2.jpg')} />
+        <Image style={styles.icon} source={require('../../assets/forecastForDayCondition/sunnyGif.gif')} />
     const mistImg: React.ReactElement =
-        <Image style={styles.icon} source={require('../../assets/forecastForDayCondition/mist1.jpg')} />
+        <Image style={styles.icon} source={require('../../assets/forecastForDayCondition/mistGif.gif')} />
     const cloudyImg: React.ReactElement =
-        <Image style={styles.icon} source={require('../../assets/forecastForDayCondition/cloudy.jpg')} />
+        <Image style={styles.icon} source={require('../../assets/forecastForDayCondition/cloudyGif.gif')} />
     const rainImg: React.ReactElement =
-        <Image style={styles.icon} source={require('../../assets/forecastForDayCondition/rain.jpg')} />
+        <Image style={styles.icon} source={require('../../assets/forecastForDayCondition/rainGif.gif')} />
     const thunderyOutbreaksImg: React.ReactElement =
-        <Image style={styles.icon} source={require('../../assets/forecastForDayCondition/thunderyOutbreaks.jpg')} />
+        <Image style={styles.icon} source={require('../../assets/forecastForDayCondition/thunder.gif')} />
     const rainWithThunderImg: React.ReactElement =
-        <Image style={styles.icon} source={require('../../assets/forecastForDayCondition/rainWithThunder.png')} />
+        <Image style={styles.icon} source={require('../../assets/forecastForDayCondition/thunderWithRain.gif')} />
     const snowImg: React.ReactElement =
-        <Image style={styles.icon} source={require('../../assets/forecastForDayCondition/snow.jpg')} />
+        <Image style={styles.icon} source={require('../../assets/forecastForDayCondition/snowGif.gif')} />
 
 
     const isCurrHour = (currHour: string, hour: string): boolean => {
@@ -159,7 +159,8 @@ const styles: ForecastForDayStylesTypes = StyleSheet.create({
         paddingLeft: 30,
         fontSize: 70,
         fontWeight: '200',
-        marginTop: 'auto'
+        marginTop: 'auto',
+        paddingTop: 40
     },
     condition: {
         color: 'white',
