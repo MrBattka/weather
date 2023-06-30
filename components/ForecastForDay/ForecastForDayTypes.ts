@@ -22,6 +22,7 @@ export type ForecastForDayTypes = {
     tempApparentDay: null
     setTempApparentDay: React.Dispatch<React.SetStateAction<null>>
     currDay: number
+    forecast: never[]
 }
 
 export type ForecastForDayStylesTypes = {

@@ -119,7 +119,7 @@ const App: React.FC = () => {
             windSpeedHourly={windSpeedHourly} setWindSpeedHourly={setWindSpeedHourly}
             windSpeedDay={windSpeedDay} setWindSpeedDay={setWindSpeedDay} precipitationDay={precipitationDay}
             setPrecipitationDay={setPrecipitationDay} tempApparentDay={tempApparentDay}
-            setTempApparentDay={setTempApparentDay} currDay={currDay} />}
+            setTempApparentDay={setTempApparentDay} currDay={currDay} forecast={forecast} />}
         </View> :
 
         <View style={styles.wrapperMainPage}>

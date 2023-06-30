@@ -7,7 +7,7 @@ const ForecastForDay: FC<ForecastForDayTypes> = ({ isOpenForestForDay, setIsOpen
     selectDay, hourly, setHourly, currHour, tempHourly, setTempHourly, returnIcon, wheatherCode,
     wheatherCodeHorly, setWheatherCodeHorly, windSpeedHourly, setWindSpeedHourly, windSpeedDay,
     setWindSpeedDay, precipitationDay, setPrecipitationDay, tempApparentDay, currDay,
-    setTempApparentDay }): React.ReactElement => {
+    setTempApparentDay, forecast }): React.ReactElement => {
 
     const [currForecastDay, setCurrForecastDay] = useState([])
     const [tempForecastDay, setTempForecastDay] = useState([])
@@ -73,7 +73,7 @@ const ForecastForDay: FC<ForecastForDayTypes> = ({ isOpenForestForDay, setIsOpen
                 {isConditionForCurrDay(selectDay, wheatherCode) === 'Снег' && snowImg}
                 {isConditionForCurrDay(selectDay, wheatherCode) === 'Туман' && mistImg}
 
-                <Text style={styles.currTemp}>{tempForecastDay[0]}°</Text>
+                <Text style={styles.currTemp}>{currDataForDay(forecast, selectDay)}°</Text>
                 <Text style={styles.condition}>
                     {isConditionForCurrDay(selectDay, wheatherCode)}  |  {currToDay(selectDay, currDay)}
                 </Text>
