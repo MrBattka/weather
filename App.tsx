@@ -169,7 +169,8 @@ const styles: AppStyleTypes = StyleSheet.create({
     color: 'white',
     letterSpacing: 1,
     textShadowColor: 'gray',
-    textShadowRadius: 10
+    textShadowRadius: 10,
+    textAlign: 'center'
   },
   temperature: {
     fontSize: 70,
