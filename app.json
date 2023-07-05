@@ -4,7 +4,7 @@
     "slug": "weather",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/wheatherCopy-round.png",
+    "icon": "./assets/icon-small-round.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/wheatherCopy-round.png",

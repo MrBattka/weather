@@ -181,7 +181,7 @@ const styles: AppStyleTypes = StyleSheet.create({
     height: '52%',
     alignItems: 'flex-start',
     justifyContent: 'space-around',
-    marginLeft: 40,
+    marginLeft: 25,
   },
   icon: {
     width: 30,

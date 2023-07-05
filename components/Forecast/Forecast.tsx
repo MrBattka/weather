@@ -2,6 +2,8 @@ import React, { FC, useCallback } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { weekday } from '../../common/weatherHelpers'
 import { ForecastStylesTypes, ForecastType } from './ForecastTypes'
+import Weekdays from './Weekdays/Weekdays'
+import ForecastTemp from './ForecastTemp/ForecastTemp'
 
 const Forecast: FC<ForecastType> = ({ forecast, currDay, isOpenForestForDay, setIsOpenForestForDay,
     setSelectDay, wheatherCode, returnIcon }) => {
@@ -25,17 +27,13 @@ const Forecast: FC<ForecastType> = ({ forecast, currDay, isOpenForestForDay, set
             <View style={styles.wrapperWeekdays}>
                 <Text style={styles.currDay}>{weekday(currDay)}</Text>
                 {week.map((d, i) => (
-                    <View key={i}>
-                        <Text style={styles.weekday}>{d}</Text>
-                    </View>
+                    <Weekdays day={d} i={i} />
                 ))}
             </View>
             <View style={styles.wrapperForecast}>
                 <View style={styles.forecastTemp}>
-                    {forecast.map((f: any, i: number) => (
-                        <View key={i}>
-                            <Text style={styles.temp}>{Math.floor(f)}°</Text>
-                        </View>
+                    {forecast.map((temp: number, i: number) => (
+                        <ForecastTemp temp={temp} i={i} />
                     ))}
                 </View>
                 <View style={styles.forecastIcon}>
@@ -65,13 +63,6 @@ const styles: ForecastStylesTypes = StyleSheet.create({
         alignItems: 'flex-start',
         width: 135
     },
-    weekday: {
-        fontSize: 21,
-        fontWeight: '300',
-        color: 'white',
-        textShadowColor: '#4a4a4a',
-        textShadowRadius: 10,
-    },
     currDay: {
         fontSize: 22,
         fontWeight: '700',
@@ -82,18 +73,13 @@ const styles: ForecastStylesTypes = StyleSheet.create({
     wrapperForecast: {
         flexDirection: 'row',
         justifyContent: 'flex-end',
-        width: '60%'
+        width: '60%',
+        paddingRight: 0
     },
     forecastTemp: {
         flexDirection: 'column',
         justifyContent: 'space-around',
         alignItems: 'flex-start'
-    },
-    temp: {
-        fontSize: 22,
-        marginRight: 15,
-        color: 'white',
-        fontWeight: '700'
     },
     forecastIcon: {
         flexDirection: 'column',

@@ -13,11 +13,9 @@ export type ForecastType = {
 export type ForecastStylesTypes = {
     wrapper: object
     wrapperWeekdays: object
-    weekday: object
     currDay: object
     wrapperForecast: object
     forecastTemp: object
-    temp: object
     forecastIcon: object
     wrapperIcon: object
     goToForecastForDay: object
