@@ -116,7 +116,7 @@ const ForecastForDay: FC<ForecastForDayTypes> = ({ isOpenForestForDay, setIsOpen
                     <View>
                     <View style={styles.titleItem}><Text style={styles.item}>Ветер</Text></View>
                         {windSpeedForecastDay.map((winds, i) => (
-                            <View style={styles.wrapperHours} key={i}>
+                            <View style={styles.wrapperWnds} key={i}>
                                 <Text style={styles.item}>
                                     {kmHInMS(winds)} <Text style={styles.measureUnit}>м/с</Text>
                                 </Text>
@@ -200,18 +200,20 @@ const styles: ForecastForDayStylesTypes = StyleSheet.create({
     },
     wrapperHourlyForecast: {
         flexDirection: 'row',
-        justifyContent: 'space-around'
+        justifyContent: 'space-around',
+        alignItems: 'center'
     },
     hourlyForecast: {
         backgroundColor: 'black',
         maxHeight: '100%',
-        flexDirection: 'column',
+        flexDirection: 'column'
     },
     wrapperHours: {
         flexDirection: 'column',
         height: 35,
+        margin: 'auto',
         marginTop: 15,
-        alignItems: 'flex-start',
+        marginLeft: 5,
         justifyContent: 'space-around',
         width: 72
     },
@@ -232,6 +234,13 @@ const styles: ForecastForDayStylesTypes = StyleSheet.create({
     },
     wrapperIcon: {
         width: 30
+    },
+    wrapperWnds: {
+        flexDirection: 'column',
+        alignItems: 'flex-start',
+        justifyContent: 'space-around',
+        height: 35,
+        marginTop: 15,
     },
     wrapperIconCondition: {
         flexDirection: 'column',

@@ -19,7 +19,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/wheatherCopy-round.png",
+        "foregroundImage": "./assets/icon-small-round.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.mrbattka.weather"

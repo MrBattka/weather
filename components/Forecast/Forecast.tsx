@@ -27,13 +27,13 @@ const Forecast: FC<ForecastType> = ({ forecast, currDay, isOpenForestForDay, set
             <View style={styles.wrapperWeekdays}>
                 <Text style={styles.currDay}>{weekday(currDay)}</Text>
                 {week.map((d, i) => (
-                    <Weekdays day={d} i={i} />
+                    <Weekdays day={d} key={i} />
                 ))}
             </View>
             <View style={styles.wrapperForecast}>
                 <View style={styles.forecastTemp}>
-                    {forecast.map((temp: number, i: number) => (
-                        <ForecastTemp temp={temp} i={i} />
+                    {forecast.map((temp, i) => (
+                        <ForecastTemp temp={temp} key={i} />
                     ))}
                 </View>
                 <View style={styles.forecastIcon}>
@@ -74,7 +74,7 @@ const styles: ForecastStylesTypes = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'flex-end',
         width: '60%',
-        paddingRight: 0
+        paddingRight: 7
     },
     forecastTemp: {
         flexDirection: 'column',

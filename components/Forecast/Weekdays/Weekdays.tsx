@@ -3,12 +3,11 @@ import React from 'react'
 
 type WeekdaysTypes = {
     day: number
-    i: number
 }
 
-const Weekdays: React.FC<WeekdaysTypes> = ({ day, i }) => {
+const Weekdays: React.FC<WeekdaysTypes> = ({ day }) => {
     return (
-        <View key={i}>
+        <View>
             <Text style={styles.weekday}>{day}</Text>
         </View>
     )

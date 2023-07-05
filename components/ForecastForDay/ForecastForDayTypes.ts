@@ -46,6 +46,7 @@ export type ForecastForDayStylesTypes = {
     currItem: object
     subItem: object
     wrapperIcon: object
+    wrapperWnds: object
     wrapperIconCondition: object
     title: object
     back: object

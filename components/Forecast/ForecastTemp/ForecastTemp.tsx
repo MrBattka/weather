@@ -3,12 +3,11 @@ import React from 'react'
 
 type ForecastTempType = {
     temp: number
-    i: number
 }
 
-const ForecastTemp: React.FC<ForecastTempType> = ({ temp, i }) => {
+const ForecastTemp: React.FC<ForecastTempType> = ({ temp}) => {
     return (
-        <View key={i}>
+        <View>
             <Text style={styles.temp}>{Math.floor(temp)}°</Text>
         </View>
     )
