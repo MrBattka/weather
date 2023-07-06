@@ -4,7 +4,7 @@
     "slug": "weather",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon-small-round.png",
+    "icon": "./assets/logoWeather.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/wheatherCopy-round.png",
@@ -19,7 +19,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/icon-small-round.png",
+        "foregroundImage": "./assets/logoWeather.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.mrbattka.weather"
