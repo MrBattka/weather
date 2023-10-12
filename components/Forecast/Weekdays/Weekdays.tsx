@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     weekday: {
         fontSize: 21,
         fontWeight: '300',
-        color: 'white',
+        color: '#e8e8e8',
         textShadowColor: '#4a4a4a',
         textShadowRadius: 10,
     },

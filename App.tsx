@@ -54,7 +54,7 @@ const App: React.FC = () => {
     setTempApparentDay(tempApparentForecastDay)
     setPrecipitationDay(precipitationForecastDay)
   }, [isOpenForestForDay])
-
+  
   useEffect(() => {
     const getPermissions = async () => {
       let { status } = await Location.requestForegroundPermissionsAsync()
@@ -74,12 +74,12 @@ const App: React.FC = () => {
 
   const currHour: string = date.getHours().toString()
 
-  if (!geo && typeof location === 'undefined') {
+  if (typeof location === 'undefined') {
     return <ActivityIndicator style={styles.preloader} size='large' color='#0000ff' />
   }
 
-  const dayBg: React.ReactElement = <Image style={styles.background} source={require('./assets/day.jpg')} />
-  const nightBg: React.ReactElement = <Image style={styles.background} source={require('./assets/night.jpg')} />
+  const dayBg: React.ReactElement = <Image style={styles.background} source={require('./assets/day.gif')} />
+  const nightBg: React.ReactElement = <Image style={styles.background} source={require('./assets/night.gif')} />
 
   const returnIcon: Function = (weatherCode: number) => {
     if (weatherCode === 0 || weatherCode === 1) {
@@ -149,7 +149,7 @@ const styles: AppStyleTypes = StyleSheet.create({
   background: {
     position: 'absolute',
     width: '100%',
-    height: '100%'
+    height: '100%',
   },
   wrapperMainPage: {
     height: '100%',
@@ -165,7 +165,7 @@ const styles: AppStyleTypes = StyleSheet.create({
   },
   city: {
     fontSize: 27,
-    fontWeight: '200',
+    fontWeight: '400',
     color: 'white',
     letterSpacing: 1,
     textShadowColor: 'gray',

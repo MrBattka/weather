@@ -17,17 +17,23 @@ const Forecast: FC<ForecastType> = ({ forecast, currDay, isOpenForestForDay, set
 
     const week: number[] = [day1, day2, day3, day4, day5, day6]
 
+
     const openSelectDay = useCallback((i: number) => {
         setIsOpenForestForDay(!isOpenForestForDay)
         setSelectDay(i)
     }, [setIsOpenForestForDay, setSelectDay])
+    
 
     return (
         <View style={styles.wrapper}>
             <View style={styles.wrapperWeekdays}>
-                <Text style={styles.currDay}>{weekday(currDay)}</Text>
+                <TouchableOpacity onPress={() => openSelectDay(currDay)}>
+                    <Text style={styles.currDay}>{weekday(currDay)}</Text>
+                </TouchableOpacity>
                 {week.map((d, i) => (
-                    <Weekdays day={d} key={i} />
+                    <TouchableOpacity key={i} onPress={() => openSelectDay(i + 1)}>
+                        <Weekdays day={d} />
+                    </TouchableOpacity>
                 ))}
             </View>
             <View style={styles.wrapperForecast}>
@@ -61,14 +67,13 @@ const styles: ForecastStylesTypes = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'space-around',
         alignItems: 'flex-start',
-        width: 135
+        width: 140
     },
     currDay: {
         fontSize: 22,
         fontWeight: '700',
         color: 'white',
-        textShadowColor: '#4a4a4a',
-        textShadowRadius: 10
+        letterSpacing: 0.3
     },
     wrapperForecast: {
         flexDirection: 'row',
@@ -84,14 +89,15 @@ const styles: ForecastStylesTypes = StyleSheet.create({
     forecastIcon: {
         flexDirection: 'column',
         justifyContent: 'space-around',
-        alignItems: 'flex-start',
+        alignItems: 'flex-start'
     },
     wrapperIcon: {
-        flexDirection: 'row'
+        flexDirection: 'row',
     },
     goToForecastForDay: {
         fontSize: 21,
-        color: 'white'
+        color: 'white',
+        marginRight: 10
     }
 })
 
