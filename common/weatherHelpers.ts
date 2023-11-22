@@ -68,13 +68,13 @@ export const currData: Function = (data: never[], selectDay: number, callback: C
     } else if (selectDay === 2) {
         return callback(data.slice(48, 72))
     } else if (selectDay === 3) {
-        return callback(data.slice(48, 72))
-    } else if (selectDay === 4) {
         return callback(data.slice(72, 96))
-    } else if (selectDay === 5) {
+    } else if (selectDay === 4) {
         return callback(data.slice(96, 120))
-    } else if (selectDay === 6) {
+    } else if (selectDay === 5) {
         return callback(data.slice(120, 144))
+    } else if (selectDay === 6) {
+        return callback(data.slice(144, 168))
     }
 }
 

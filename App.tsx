@@ -106,6 +106,31 @@ const App: React.FC = () => {
     }
   }
 
+  const returnCurrIcon: Function = (weatherCode: number) => {
+    if (weatherCode === 0 || weatherCode === 1) {
+      return <Image style={styles.icon} source={require('./assets/iconCondition/clear.png')} />
+    } else if (weatherCode === 2) {
+      return <Image style={styles.currIcon} source={require('./assets/iconCondition/partlyСloudy.png')} />
+    } else if (weatherCode === 45 || weatherCode === 48) {
+      return <Image style={styles.currIcon} source={require('./assets/iconCondition/fog.png')} />
+    } else if (weatherCode === 51 || weatherCode === 53 || weatherCode === 55 || weatherCode === 61 ||
+      weatherCode === 63 || weatherCode === 65 || weatherCode === 67 || weatherCode === 80 ||
+      weatherCode === 81 || weatherCode === 82) {
+      return <Image style={styles.currIcon} source={require('./assets/iconCondition/rain.png')} />
+    } else if (weatherCode === 56 || weatherCode === 57) {
+      return <Image style={styles.currIcon} source={require('./assets/iconCondition/freezingRain.png')} />
+    } else if (weatherCode === 3) {
+      return <Image style={styles.currIcon} source={require('./assets/iconCondition/cloudy.png')} />
+    } else if (weatherCode === 71 || weatherCode === 73 || weatherCode === 75 || weatherCode === 77 ||
+      weatherCode === 85 || weatherCode === 86) {
+      return <Image style={styles.currIcon} source={require('./assets/iconCondition/snow.png')} />
+    } else if (weatherCode === 95) {
+      return <Image style={styles.currIcon} source={require('./assets/iconCondition/thunder.png')} />
+    } else if (weatherCode === 96 || weatherCode === 99) {
+      return <Image style={styles.currIcon} source={require('./assets/iconCondition/thunderWithRain.png')} />
+    }
+  }
+
   return (
     <View style={styles.container}>
       {isDay ? dayBg : nightBg}
@@ -126,6 +151,7 @@ const App: React.FC = () => {
           <View style={styles.wrapperTitle}>
             <Text style={styles.city}>{geo}</Text>
             <Text style={styles.temperature}>{forecast[0]}°</Text>
+            <View>{returnCurrIcon(wheatherCode[0])}</View>
           </View>
           <View style={styles.wrapperWeek}>
             <Forecast currDay={currDay} forecast={forecast} returnIcon={returnIcon}
@@ -161,7 +187,7 @@ const styles: AppStyleTypes = StyleSheet.create({
     height: '45%',
     justifyContent: 'flex-end',
     alignItems: 'center',
-    paddingBottom: 60
+    paddingBottom: 40
   },
   city: {
     fontSize: 27,
@@ -189,6 +215,11 @@ const styles: AppStyleTypes = StyleSheet.create({
     marginRight: 17,
     alignItems: 'center',
   },
+  currIcon: {
+    width: 50,
+    height: 50,
+    alignItems: 'center',
+  }
 });
 
 export default App

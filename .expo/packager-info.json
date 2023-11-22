@@ -1,7 +1,8 @@
 {
-  "expoServerPort": null,
+  "expoServerPort": 19000,
   "packagerPort": 19000,
   "expoServerNgrokUrl": "https://4x-pdg.mrbattka.weather.exp.direct",
   "packagerNgrokUrl": "https://4x-pdg.mrbattka.weather.exp.direct",
-  "ngrokPid": 12920
+  "ngrokPid": 12920,
+  "webpackServerPort": null
 }

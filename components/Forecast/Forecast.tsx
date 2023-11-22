@@ -17,17 +17,15 @@ const Forecast: FC<ForecastType> = ({ forecast, currDay, isOpenForestForDay, set
 
     const week: number[] = [day1, day2, day3, day4, day5, day6]
 
-
     const openSelectDay = useCallback((i: number) => {
         setIsOpenForestForDay(!isOpenForestForDay)
         setSelectDay(i)
     }, [setIsOpenForestForDay, setSelectDay])
-    
 
     return (
         <View style={styles.wrapper}>
             <View style={styles.wrapperWeekdays}>
-                <TouchableOpacity onPress={() => openSelectDay(currDay)}>
+                <TouchableOpacity onPress={() => openSelectDay(0)}>
                     <Text style={styles.currDay}>{weekday(currDay)}</Text>
                 </TouchableOpacity>
                 {week.map((d, i) => (
@@ -67,7 +65,7 @@ const styles: ForecastStylesTypes = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'space-around',
         alignItems: 'flex-start',
-        width: 140
+        width: 146
     },
     currDay: {
         fontSize: 22,
@@ -79,7 +77,7 @@ const styles: ForecastStylesTypes = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'flex-end',
         width: '60%',
-        paddingRight: 7
+        paddingRight: 10
     },
     forecastTemp: {
         flexDirection: 'column',

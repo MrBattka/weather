@@ -14,6 +14,7 @@ export type AppStyleTypes = {
     temperature: object
     wrapperWeek: object
     icon: object
+    currIcon: object
 }
 
 export type dataTypes = {
