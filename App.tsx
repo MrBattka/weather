@@ -1,7 +1,8 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Location from 'expo-location';
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, Image, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { AppStyleTypes, dataTypes, dateTypes } from './AppTypes';
 import { getCurrentTemp, getForecast, getIsDay, getLocation, getPrecipitation, getTempApparentForDay, getTempForecastForDay, getTimeForecastForDay, getWheatherCode, getWheatherCodeForHourly, getWindSpeedForDay, getWindSpeedForHourly } from './api/api';
 import Forecast from './components/Forecast/Forecast';
@@ -28,8 +29,52 @@ const App: React.FC = () => {
   const [precipitationDay, setPrecipitationDay] = useState(null)
   const [tempApparentForecastDay, setTempApparentForecastDay] = useState(null)
   const [tempApparentDay, setTempApparentDay] = useState(null)
-  const [location, setLication] = useState<Location.LocationObjectCoords>()
+  const [location, setLocation] = useState<Location.LocationObjectCoords>()
   const [geo, setGeo] = useState(null)
+
+  //   store geo
+
+  const storeLocation = async (location: any) => {
+    try {
+      
+      if (location) {
+        const jsonValue = JSON.stringify(location)
+        await AsyncStorage.setItem('location', jsonValue)
+      }
+
+    } catch (e) {
+      console.log('Error soring data', e);
+    }
+  }
+
+  useEffect(() => {
+    if (location) {
+      storeLocation(location)
+    }
+  }, [storeLocation, setLocation, location])
+
+  //    get geo
+
+  const getStoreLocation = async () => {
+    try {
+      const prevGeo: any = await AsyncStorage.getItem('location')
+
+      if (prevGeo !== null) {
+        const arrValue = prevGeo.slice(1, -1)
+        const result = JSON.parse('{' + arrValue + '}')
+        setLocation(result)
+      } else {
+        getNewPosition()
+      }
+
+    } catch (err) {
+      console.log('Error getting data', err);
+    }
+  }
+
+  useEffect(() => {
+    getStoreLocation()
+  }, [])
 
   useEffect(() => {
     getIsDay(setIsDay)
@@ -54,32 +99,48 @@ const App: React.FC = () => {
     setTempApparentDay(tempApparentForecastDay)
     setPrecipitationDay(precipitationForecastDay)
   }, [isOpenForestForDay])
-  
-  useEffect(() => {
-    const getPermissions = async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync()
-      if (status !== 'granted') {
-        console.log('Please grant location permissions');
-        return
-      }
 
-      let currentLocation = await Location.getCurrentPositionAsync({})
-      setLication(currentLocation.coords)
+  // useEffect(() => {
+  //   const getPermissions = async () => {
+  //     let { status } = await Location.requestForegroundPermissionsAsync()
+  //     if (status !== 'granted') {
+  //       console.log('Please grant location permissions');
+  //       return
+  //     }
+  //     if (typeof location === 'undefined' && location === null) {
+  //       let currentLocation = await Location.getCurrentPositionAsync({})
+  //       if (location !== currentLocation.coords) {
+  //         setLocation(currentLocation.coords)
+  //       }
+  //     }
+  //   }
+  //   getPermissions()
+  // }, [getStoreLocation, location, setLocation])
+
+  const getNewPosition = async () => {
+    let { status } = await Location.requestForegroundPermissionsAsync()
+    if (status !== 'granted') {
+      console.log('Please grant location permissions');
+      return
     }
-    getPermissions()
-  }, [])
+    let currentLocation = await Location.getCurrentPositionAsync({})
+    if (location !== currentLocation.coords) {
+      setLocation(currentLocation.coords)
+    }
+  }
 
   const date: dateTypes = new Date()
   const currDay: number = date.getDay()
 
   const currHour: string = date.getHours().toString()
 
-  if (typeof location === 'undefined') {
+  if (typeof location === 'undefined' || location === null) {
     return <ActivityIndicator style={styles.preloader} size='large' color='#0000ff' />
   }
 
   const dayBg: React.ReactElement = <Image style={styles.background} source={require('./assets/day.gif')} />
   const nightBg: React.ReactElement = <Image style={styles.background} source={require('./assets/night.gif')} />
+  const reloadImg: React.ReactElement = <Image style={styles.positionIcon} source={require('./assets/reload.png')} />
 
   const returnIcon: Function = (weatherCode: number) => {
     if (weatherCode === 0 || weatherCode === 1) {
@@ -149,6 +210,9 @@ const App: React.FC = () => {
 
         <View style={styles.wrapperMainPage}>
           <View style={styles.wrapperTitle}>
+            <TouchableOpacity style={styles.reloadPosition} onPress={() => getNewPosition()}>
+              <Text style={styles.reloadTitle}>Обновить позицию</Text>{reloadImg}
+            </TouchableOpacity>
             <Text style={styles.city}>{geo}</Text>
             <Text style={styles.temperature}>{forecast[0]}°</Text>
             <View>{returnCurrIcon(wheatherCode[0])}</View>
@@ -188,6 +252,20 @@ const styles: AppStyleTypes = StyleSheet.create({
     justifyContent: 'flex-end',
     alignItems: 'center',
     paddingBottom: 40
+  },
+  reloadPosition: {
+    width: 100,
+    marginBottom: 60,
+    marginLeft: '60%',
+    flexDirection: 'row'
+  },
+  reloadTitle: {
+    fontWeight: '400',
+    color: '#969696',
+  },
+  positionIcon: {
+    width: 40,
+    height: 40
   },
   city: {
     fontSize: 27,

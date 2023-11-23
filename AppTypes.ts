@@ -10,6 +10,9 @@ export type AppStyleTypes = {
     wrapperMainPage: object
     wrapperForecastForDay: object
     wrapperTitle: object
+    reloadPosition: object
+    reloadTitle: object
+    positionIcon: object
     city: object
     temperature: object
     wrapperWeek: object
