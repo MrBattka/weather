@@ -18,6 +18,7 @@ export type AppStyleTypes = {
     wrapperWeek: object
     icon: object
     currIcon: object
+    wrapperCurrIcon: object
 }
 
 export type dataTypes = {

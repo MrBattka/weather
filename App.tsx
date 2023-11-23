@@ -10,7 +10,7 @@ import ForecastForDay from './components/ForecastForDay/ForecastForDay';
 
 const App: React.FC = () => {
 
-  const [isDay, setIsDay] = useState('')
+  const [isDay, setIsDay] = useState(false)
   const [forecast, setForecast] = useState([])
   const [wheatherCode, setWheatherCode] = useState([])
   const [timeforecastForDay, setTimeForecastForDay] = useState<null>(null)
@@ -36,7 +36,7 @@ const App: React.FC = () => {
 
   const storeLocation = async (location: any) => {
     try {
-      
+
       if (location) {
         const jsonValue = JSON.stringify(location)
         await AsyncStorage.setItem('location', jsonValue)
@@ -76,8 +76,21 @@ const App: React.FC = () => {
     getStoreLocation()
   }, [])
 
+  const date: dateTypes = new Date()
+  const currDay: number = date.getDay()
+  const hour: number = date.getHours()
+  const currHour: string = date.getHours().toString()
+
+  const isDayNow = (hour: number) => {
+    if (hour > 19 || hour < 6) {
+      setIsDay(false)
+    } else {
+      setIsDay(true)
+    }
+  }
+  
   useEffect(() => {
-    getIsDay(setIsDay)
+    isDayNow(hour)
     getForecast(setForecast, location?.latitude, location?.longitude)
     getTimeForecastForDay(setTimeForecastForDay, location?.latitude, location?.longitude)
     getTempForecastForDay(setTempForecastForDay, location?.latitude, location?.longitude)
@@ -88,7 +101,8 @@ const App: React.FC = () => {
     getWindSpeedForDay(setWindSpeedForecastDay, location?.latitude, location?.longitude)
     getTempApparentForDay(setTempApparentForecastDay, location?.latitude, location?.longitude)
     getLocation(setGeo, location?.latitude, location?.longitude)
-  }, [getCurrentTemp, getIsDay, getForecast, typeof location === 'object', typeof geo === 'object'])
+  }, [isDayNow, getCurrentTemp, getIsDay, getForecast, typeof location === 'object', typeof geo === 'object'])
+console.log(isDay);
 
   useEffect(() => {
     setHourly(timeforecastForDay)
@@ -128,11 +142,6 @@ const App: React.FC = () => {
       setLocation(currentLocation.coords)
     }
   }
-
-  const date: dateTypes = new Date()
-  const currDay: number = date.getDay()
-
-  const currHour: string = date.getHours().toString()
 
   if (typeof location === 'undefined' || location === null) {
     return <ActivityIndicator style={styles.preloader} size='large' color='#0000ff' />
@@ -215,7 +224,7 @@ const App: React.FC = () => {
             </TouchableOpacity>
             <Text style={styles.city}>{geo}</Text>
             <Text style={styles.temperature}>{forecast[0]}°</Text>
-            <View>{returnCurrIcon(wheatherCode[0])}</View>
+            <View style={styles.wrapperCurrIcon}>{returnCurrIcon(wheatherCode[0])}</View>
           </View>
           <View style={styles.wrapperWeek}>
             <Forecast currDay={currDay} forecast={forecast} returnIcon={returnIcon}
@@ -255,7 +264,7 @@ const styles: AppStyleTypes = StyleSheet.create({
   },
   reloadPosition: {
     width: 100,
-    marginBottom: 60,
+    marginBottom: '10%',
     marginLeft: '60%',
     flexDirection: 'row'
   },
@@ -277,6 +286,7 @@ const styles: AppStyleTypes = StyleSheet.create({
     textAlign: 'center'
   },
   temperature: {
+    marginLeft: 28,
     fontSize: 70,
     fontWeight: '500',
     color: 'white'
@@ -293,10 +303,15 @@ const styles: AppStyleTypes = StyleSheet.create({
     marginRight: 17,
     alignItems: 'center',
   },
+  wrapperCurrIcon: {
+    opacity: 0.8,
+    borderRadius: 50
+  },
   currIcon: {
-    width: 50,
-    height: 50,
-    alignItems: 'center',
+    width: 60,
+    height: 60,
+    borderRadius: 50,
+    alignItems: 'center'
   }
 });
 
