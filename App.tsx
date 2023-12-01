@@ -81,16 +81,19 @@ const App: React.FC = () => {
   const hour: number = date.getHours()
   const currHour: string = date.getHours().toString()
 
-  const isDayNow = (hour: number) => {
+  const isDayNow = () => {
     if (hour > 19 || hour < 6) {
       setIsDay(false)
     } else {
       setIsDay(true)
     }
   }
-  
+
   useEffect(() => {
-    isDayNow(hour)
+    isDayNow()
+  }, [])
+
+  useEffect(() => {
     getForecast(setForecast, location?.latitude, location?.longitude)
     getTimeForecastForDay(setTimeForecastForDay, location?.latitude, location?.longitude)
     getTempForecastForDay(setTempForecastForDay, location?.latitude, location?.longitude)
@@ -101,8 +104,7 @@ const App: React.FC = () => {
     getWindSpeedForDay(setWindSpeedForecastDay, location?.latitude, location?.longitude)
     getTempApparentForDay(setTempApparentForecastDay, location?.latitude, location?.longitude)
     getLocation(setGeo, location?.latitude, location?.longitude)
-  }, [isDayNow, getCurrentTemp, getIsDay, getForecast, typeof location === 'object', typeof geo === 'object'])
-console.log(isDay);
+  }, [getCurrentTemp, getForecast, typeof location === 'object', typeof geo === 'object'])
 
   useEffect(() => {
     setHourly(timeforecastForDay)
@@ -113,23 +115,6 @@ console.log(isDay);
     setTempApparentDay(tempApparentForecastDay)
     setPrecipitationDay(precipitationForecastDay)
   }, [isOpenForestForDay])
-
-  // useEffect(() => {
-  //   const getPermissions = async () => {
-  //     let { status } = await Location.requestForegroundPermissionsAsync()
-  //     if (status !== 'granted') {
-  //       console.log('Please grant location permissions');
-  //       return
-  //     }
-  //     if (typeof location === 'undefined' && location === null) {
-  //       let currentLocation = await Location.getCurrentPositionAsync({})
-  //       if (location !== currentLocation.coords) {
-  //         setLocation(currentLocation.coords)
-  //       }
-  //     }
-  //   }
-  //   getPermissions()
-  // }, [getStoreLocation, location, setLocation])
 
   const getNewPosition = async () => {
     let { status } = await Location.requestForegroundPermissionsAsync()
