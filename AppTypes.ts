@@ -1,24 +1,26 @@
+import { FlexStyle, ImageStyle, TextStyle, ViewStyle } from "react-native";
+
 export type dateTypes = {
     getDay: () => number
     getHours: () => number
 }
 
 export type AppStyleTypes = {
-    container: object
-    preloader: object
-    background: object
-    wrapperMainPage: object
-    wrapperForecastForDay: object
-    wrapperTitle: object
-    reloadPosition: object
-    reloadTitle: object
-    positionIcon: object
-    city: object
-    temperature: object
-    wrapperWeek: object
-    icon: object
-    currIcon: object
-    wrapperCurrIcon: object
+    container: FlexStyle
+    preloader: ImageStyle
+    background: ImageStyle
+    wrapperMainPage: ViewStyle
+    wrapperForecastForDay: ViewStyle
+    wrapperTitle: ViewStyle
+    reloadPosition: ViewStyle
+    reloadTitle: TextStyle
+    positionIcon: ImageStyle
+    city: TextStyle
+    temperature: TextStyle
+    wrapperWeek: ViewStyle
+    icon: ImageStyle
+    currIcon: ImageStyle
+    wrapperCurrIcon: ViewStyle
 }
 
 export type dataTypes = {
@@ -43,5 +45,5 @@ type hourType = {
 }
 
 export type forecastForDayType = {
-    time: []
+    time: hourType[]
 }

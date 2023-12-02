@@ -1,4 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native'
+import { TextStyle } from "react-native";
+
 import React from 'react'
 
 type ForecastTempType = {
@@ -13,7 +15,11 @@ const ForecastTemp: React.FC<ForecastTempType> = ({ temp}) => {
     )
 }
 
-const styles = StyleSheet.create({
+type ForecastTempStyleTypes = {
+    temp: TextStyle
+}
+
+const styles = StyleSheet.create<ForecastTempStyleTypes>({
     temp: {
         fontSize: 22,
         marginRight: 15,

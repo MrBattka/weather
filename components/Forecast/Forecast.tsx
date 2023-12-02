@@ -6,7 +6,7 @@ import Weekdays from './Weekdays/Weekdays'
 import ForecastTemp from './ForecastTemp/ForecastTemp'
 
 const Forecast: FC<ForecastType> = ({ forecast, currDay, isOpenForestForDay, setIsOpenForestForDay,
-    setSelectDay, wheatherCode, returnIcon }) => {
+    setSelectDay, weatherCode, returnIcon }) => {
 
     const day1: number = weekday(currDay + 1)
     const day2: number = weekday(currDay + 2)
@@ -41,7 +41,7 @@ const Forecast: FC<ForecastType> = ({ forecast, currDay, isOpenForestForDay, set
                     ))}
                 </View>
                 <View style={styles.forecastIcon}>
-                    {wheatherCode.map((p, i) => (
+                    {weatherCode.map((p, i) => (
                         <View key={i} style={styles.wrapperIcon}>
                             {returnIcon(p)}
                             <TouchableOpacity onPress={() => openSelectDay(i)}>
@@ -55,7 +55,7 @@ const Forecast: FC<ForecastType> = ({ forecast, currDay, isOpenForestForDay, set
     )
 }
 
-const styles: ForecastStylesTypes = StyleSheet.create({
+const styles = StyleSheet.create<ForecastStylesTypes>({
     wrapper: {
         width: '100%',
         height: '100%',

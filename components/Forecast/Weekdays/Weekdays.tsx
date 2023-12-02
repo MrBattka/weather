@@ -1,4 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native'
+import { TextStyle } from "react-native";
 import React from 'react'
 
 type WeekdaysTypes = {
@@ -13,7 +14,11 @@ const Weekdays: React.FC<WeekdaysTypes> = ({ day }) => {
     )
 }
 
-const styles = StyleSheet.create({
+type WeekdaysStyleTypes = {
+    weekday: TextStyle
+}
+
+const styles = StyleSheet.create<WeekdaysStyleTypes>({
     weekday: {
         fontSize: 21,
         fontWeight: '300',

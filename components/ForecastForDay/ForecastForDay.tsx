@@ -4,8 +4,8 @@ import { currData, currDataForDay, currToDay, currWindForDay, isConditionForCurr
 import { ForecastForDayStylesTypes, ForecastForDayTypes } from './ForecastForDayTypes'
 
 const ForecastForDay: FC<ForecastForDayTypes> = ({ isOpenForestForDay, setIsOpenForestForDay,
-    selectDay, hourly, setHourly, currHour, tempHourly, setTempHourly, returnIcon, wheatherCode,
-    wheatherCodeHorly, setWheatherCodeHorly, windSpeedHourly, setWindSpeedHourly, windSpeedDay,
+    selectDay, hourly, setHourly, currHour, tempHourly, setTempHourly, returnIcon, weatherCode,
+    weatherCodeHourly, setWeatherCodeHourly, windSpeedHourly, setWindSpeedHourly, windSpeedDay,
     setWindSpeedDay, precipitationDay, setPrecipitationDay, tempApparentDay, currDay,
     setTempApparentDay, forecast }): React.ReactElement => {
 
@@ -22,7 +22,7 @@ const ForecastForDay: FC<ForecastForDayTypes> = ({ isOpenForestForDay, setIsOpen
         setIsOpenForestForDay(!isOpenForestForDay)
         setHourly(null)
         setTempHourly(null)
-        setWheatherCodeHorly(null)
+        setWeatherCodeHourly(null)
         setWindSpeedHourly(null)
         setWindSpeedDay(null)
         setPrecipitationDay(null)
@@ -32,7 +32,7 @@ const ForecastForDay: FC<ForecastForDayTypes> = ({ isOpenForestForDay, setIsOpen
     useEffect(() => {
         currData(hourly, selectDay, setCurrForecastDay)
         currData(tempHourly, selectDay, setTempForecastDay)
-        currData(wheatherCodeHorly, selectDay, setWeatherCodeForecastDay)
+        currData(weatherCodeHourly, selectDay, setWeatherCodeForecastDay)
         currData(windSpeedHourly, selectDay, setWindSpeedForecastDay)
     }, [isOpenForestForDay])
 
@@ -59,23 +59,23 @@ const ForecastForDay: FC<ForecastForDayTypes> = ({ isOpenForestForDay, setIsOpen
 
     return (
         <View style={styles.wrapper}>
-            <TouchableOpacity style={styles.back} onPress={(event) => backToMainPage()}>
+            <TouchableOpacity style={styles.back} onPress={() => backToMainPage()}>
                 <Text style={styles.backBtn}>{'< Back'}</Text>
             </TouchableOpacity>
             <View style={styles.currWeather}>
-                {isConditionForCurrDay(selectDay, wheatherCode) === 'Ясно' && sunnyImg}
-                {isConditionForCurrDay(selectDay, wheatherCode) === 'Пасмурно' && cloudyImg}
-                {isConditionForCurrDay(selectDay, wheatherCode) === 'Облачно' && cloudyImg}
-                {isConditionForCurrDay(selectDay, wheatherCode) === 'Дождь' && rainImg}
-                {isConditionForCurrDay(selectDay, wheatherCode) === 'Ледяной дождь' && rainImg}
-                {isConditionForCurrDay(selectDay, wheatherCode) === 'Гроза' && thunderyOutbreaksImg}
-                {isConditionForCurrDay(selectDay, wheatherCode) === 'Гроза с осадками' && rainWithThunderImg}
-                {isConditionForCurrDay(selectDay, wheatherCode) === 'Снег' && snowImg}
-                {isConditionForCurrDay(selectDay, wheatherCode) === 'Туман' && mistImg}
+                {isConditionForCurrDay(selectDay, weatherCode) === 'Ясно' && sunnyImg}
+                {isConditionForCurrDay(selectDay, weatherCode) === 'Пасмурно' && cloudyImg}
+                {isConditionForCurrDay(selectDay, weatherCode) === 'Облачно' && cloudyImg}
+                {isConditionForCurrDay(selectDay, weatherCode) === 'Дождь' && rainImg}
+                {isConditionForCurrDay(selectDay, weatherCode) === 'Ледяной дождь' && rainImg}
+                {isConditionForCurrDay(selectDay, weatherCode) === 'Гроза' && thunderyOutbreaksImg}
+                {isConditionForCurrDay(selectDay, weatherCode) === 'Гроза с осадками' && rainWithThunderImg}
+                {isConditionForCurrDay(selectDay, weatherCode) === 'Снег' && snowImg}
+                {isConditionForCurrDay(selectDay, weatherCode) === 'Туман' && mistImg}
 
                 <Text style={styles.currTemp}>{currDataForDay(forecast, selectDay)}°</Text>
                 <Text style={styles.condition}>
-                    {isConditionForCurrDay(selectDay, wheatherCode)}  |  {currToDay(selectDay, currDay)}
+                    {isConditionForCurrDay(selectDay, weatherCode)}  |  {currToDay(selectDay, currDay)}
                 </Text>
                 <View style={styles.currAddInfo}>
                     <View style={styles.blockAddInfo}>
@@ -116,7 +116,7 @@ const ForecastForDay: FC<ForecastForDayTypes> = ({ isOpenForestForDay, setIsOpen
                     <View>
                     <View style={styles.titleItem}><Text style={styles.item}>Ветер</Text></View>
                         {windSpeedForecastDay.map((winds, i) => (
-                            <View style={styles.wrapperWnds} key={i}>
+                            <View style={styles.wrapperWinds} key={i}>
                                 <Text style={styles.item}>
                                     {kmHInMS(winds)} <Text style={styles.measureUnit}>м/с</Text>
                                 </Text>
@@ -137,7 +137,7 @@ const ForecastForDay: FC<ForecastForDayTypes> = ({ isOpenForestForDay, setIsOpen
     )
 }
 
-const styles: ForecastForDayStylesTypes = StyleSheet.create({
+const styles = StyleSheet.create<ForecastForDayStylesTypes>({
     wrapper: {
         height: '100%'
     },
@@ -229,13 +229,7 @@ const styles: ForecastForDayStylesTypes = StyleSheet.create({
         color: 'white',
         fontWeight: '900',
     },
-    subItem: {
-        fontSize: 12
-    },
-    wrapperIcon: {
-        width: 30
-    },
-    wrapperWnds: {
+    wrapperWinds: {
         flexDirection: 'column',
         alignItems: 'flex-start',
         justifyContent: 'space-around',
@@ -251,10 +245,6 @@ const styles: ForecastForDayStylesTypes = StyleSheet.create({
         height: 35,
         marginTop: 15,
     },
-    title: {
-        fontSize: 20,
-        color: 'white',
-    },
     back: {
         marginTop: 40,
         marginLeft: 20,
@@ -267,10 +257,6 @@ const styles: ForecastForDayStylesTypes = StyleSheet.create({
         fontWeight: '500',
         textShadowColor: 'black',
         textShadowRadius: 20
-    },
-    txt: {
-        color: 'black',
-        fontSize: 20
     }
 })
 

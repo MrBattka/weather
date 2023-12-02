@@ -1,5 +1,13 @@
 
-export const isCondition: Function = (weatherCode: number) => {
+export const isDayNow = (setIsDay: React.Dispatch<React.SetStateAction<boolean>>, hour: number): void => {
+    if (hour > 19 || hour < 6) {
+        setIsDay(false)
+    } else {
+        setIsDay(true)
+    }
+}
+
+export const isCondition: Function = (weatherCode: number): string | void => {
     if (weatherCode === 0 || weatherCode === 1) {
         return 'Ясно'
     } else if (weatherCode === 2) {
@@ -12,7 +20,7 @@ export const isCondition: Function = (weatherCode: number) => {
         weatherCode === 56 || weatherCode === 57 || weatherCode === 61 || weatherCode === 63 ||
         weatherCode === 65 || weatherCode === 80 || weatherCode === 81 || weatherCode === 82) {
         return 'Дождь'
-    } else if (weatherCode === 66 || weatherCode === 67) { 
+    } else if (weatherCode === 66 || weatherCode === 67) {
         return 'Ледяной дождь'
     } else if (weatherCode === 71 || weatherCode === 73 || weatherCode === 75 ||
         weatherCode === 77 || weatherCode === 85 || weatherCode === 86) {
@@ -24,7 +32,7 @@ export const isCondition: Function = (weatherCode: number) => {
     }
 }
 
-export const weekday: Function = (day: number) => {
+export const weekday: Function = (day: number): string | void => {
     if (day === 0 || day === 7) {
         return 'Воскресенье'
     } else if (day === 1 || day === 8) {
@@ -42,25 +50,25 @@ export const weekday: Function = (day: number) => {
     }
 }
 
-export const isConditionForCurrDay: Function = (selectDay: number, wheatherCode: never[]) => {
+export const isConditionForCurrDay: Function = (selectDay: number, weatherCode: never[]): string | void => {
     if (selectDay === 0) {
-        return isCondition(wheatherCode[0])
+        return isCondition(weatherCode[0])
     } else if (selectDay === 1) {
-        return isCondition(wheatherCode[1])
+        return isCondition(weatherCode[1])
     } else if (selectDay === 2) {
-        return isCondition(wheatherCode[2])
+        return isCondition(weatherCode[2])
     } else if (selectDay === 3) {
-        return isCondition(wheatherCode[3])
+        return isCondition(weatherCode[3])
     } else if (selectDay === 4) {
-        return isCondition(wheatherCode[4])
+        return isCondition(weatherCode[4])
     } else if (selectDay === 5) {
-        return isCondition(wheatherCode[5])
+        return isCondition(weatherCode[5])
     } else if (selectDay === 6) {
-        return isCondition(wheatherCode[6])
+        return isCondition(weatherCode[6])
     }
 }
 
-export const currData: Function = (data: never[], selectDay: number, callback: CallableFunction) => {
+export const currData: Function = (data: never[], selectDay: number, callback: CallableFunction): string | void => {
     if (selectDay === 0) {
         return callback(data.slice(0, 24))
     } else if (selectDay === 1) {
@@ -78,7 +86,7 @@ export const currData: Function = (data: never[], selectDay: number, callback: C
     }
 }
 
-export const currToDay: Function = (selectDay: number, currDay: number) => {
+export const currToDay: Function = (selectDay: number, currDay: number): number | void => {
     if (selectDay === 0) {
         return weekday(currDay)
     } else if (selectDay === 1) {
@@ -101,7 +109,7 @@ export const kmHInMS: Function = (num: number): string => {
     return result.toFixed(1)
 }
 
-export const currWindForDay: Function = (data: never[], selectDay: number) => {
+export const currWindForDay: Function = (data: never[], selectDay: number): string | void => {
     if (selectDay === 0) {
         return kmHInMS(data[0])
     } else if (selectDay === 1) {
@@ -119,7 +127,7 @@ export const currWindForDay: Function = (data: never[], selectDay: number) => {
     }
 }
 
-export const currDataForDay: Function = (data: never[], selectDay: number) => {
+export const currDataForDay: Function = (data: never[], selectDay: number): string | void => {
     if (selectDay === 0) {
         return data[0]
     } else if (selectDay === 1) {

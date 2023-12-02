@@ -1,4 +1,5 @@
-import { dataTypes } from "../../AppTypes"
+import { ImageStyle, TextStyle, ViewStyle } from "react-native";
+import { dataTypes } from "../../AppTypes";
 
 export type ForecastForDayTypes = {
     isOpenForestForDay: boolean
@@ -10,9 +11,9 @@ export type ForecastForDayTypes = {
     tempHourly: null
     setTempHourly: React.Dispatch<React.SetStateAction<null>>
     returnIcon: Function
-    wheatherCode: never[]
-    wheatherCodeHorly: null
-    setWheatherCodeHorly: React.Dispatch<React.SetStateAction<null>>
+    weatherCode: never[]
+    weatherCodeHourly: null
+    setWeatherCodeHourly: React.Dispatch<React.SetStateAction<null>>
     windSpeedHourly: null
     setWindSpeedHourly: React.Dispatch<React.SetStateAction<null>>
     windSpeedDay: null
@@ -26,30 +27,26 @@ export type ForecastForDayTypes = {
 }
 
 export type ForecastForDayStylesTypes = {
-    wrapper: object
-    icon: object
-    preloader: object
-    currWeather: object
-    currTemp: object
-    condition: object
-    currAddInfo: object
-    blockAddInfo: object
-    blockAddInfoLastChild: object
-    titleAddInfo: object
-    valueAddInfo: object
-    measureUnit: object
-    wrapperHourlyForecast: object
-    hourlyForecast: object
-    wrapperHours: object
-    titleItem: object
-    item: object
-    currItem: object
-    subItem: object
-    wrapperIcon: object
-    wrapperWnds: object
-    wrapperIconCondition: object
-    title: object
-    back: object
-    backBtn: object
-    txt: object
+    wrapper: ViewStyle
+    icon: ImageStyle
+    preloader: ImageStyle
+    currWeather: ViewStyle
+    currTemp: TextStyle
+    condition: TextStyle
+    currAddInfo: ViewStyle
+    blockAddInfo: ViewStyle
+    blockAddInfoLastChild: ViewStyle
+    titleAddInfo: TextStyle
+    valueAddInfo: TextStyle
+    measureUnit: TextStyle
+    wrapperHourlyForecast: ViewStyle
+    hourlyForecast: ViewStyle
+    wrapperHours: ViewStyle
+    titleItem: ViewStyle
+    item: TextStyle
+    currItem: TextStyle
+    wrapperWinds: ViewStyle
+    wrapperIconCondition: ViewStyle
+    back: ViewStyle
+    backBtn: TextStyle
 }
