@@ -133,7 +133,7 @@ const App: React.FC = () => {
   const nightBg: React.ReactElement = <Image style={styles.background} source={require('./assets/night.gif')} />
   const preloadImg: React.ReactElement = <Image style={styles.positionIcon} source={require('./assets/reload.png')} />
 
-  const returnIcon: Function = (weatherCode: number) => {
+  const returnIcon: Function = (weatherCode: number): React.ReactElement<Image> | void => {
     if (weatherCode === 0 || weatherCode === 1) {
       return <Image style={styles.icon} source={require('./assets/iconCondition/clear.png')} />
     } else if (weatherCode === 2) {
@@ -158,7 +158,7 @@ const App: React.FC = () => {
     }
   }
 
-  const returnCurrIcon: Function = (weatherCode: number) => {
+  const returnCurrIcon: Function = (weatherCode: number): React.ReactElement<Image> | void => {
     if (weatherCode === 0 || weatherCode === 1) {
       return <Image style={styles.icon} source={require('./assets/iconCondition/clear.png')} />
     } else if (weatherCode === 2) {
@@ -183,8 +183,23 @@ const App: React.FC = () => {
     }
   }
 
+  const returnBgConditions: Function = (weatherCode: number): React.ReactElement<Image> | void => {
+    if (weatherCode === 51 || weatherCode === 53 || weatherCode === 55 || weatherCode === 61 ||
+      weatherCode === 63 || weatherCode === 65 || weatherCode === 67 || weatherCode === 80 ||
+      weatherCode === 81 || weatherCode === 82 || weatherCode === 56 || weatherCode === 57 ||
+      weatherCode === 96 || weatherCode === 99) {
+      return <Image style={styles.bgCondition} source={require('./assets/gifWrapperCondition/rain.gif')} />
+    } else if (weatherCode === 71 || weatherCode === 73 || weatherCode === 75 || weatherCode === 77 ||
+      weatherCode === 85 || weatherCode === 86) {
+      return <Image style={styles.bgCondition} source={require('./assets/gifWrapperCondition/snow.gif')} />
+    }
+  }
+
+  const bgRain: React.ReactElement<Image> = <Image style={styles.bgCondition} source={require('./assets/gifWrapperCondition/rain.gif')} />
+
   return (
     <View style={styles.container}>
+      {returnBgConditions(weatherCode[0])}
       {isDay ? dayBg : nightBg}
       {isOpenForestForDay ?
 
@@ -234,9 +249,11 @@ const styles = StyleSheet.create<AppStyleTypes>({
   },
   wrapperMainPage: {
     height: '100%',
+    zIndex: 10
   },
   wrapperForecastForDay: {
-    height: '100%'
+    height: '100%',
+    zIndex: 10
   },
   wrapperTitle: {
     height: '45%',
@@ -252,7 +269,7 @@ const styles = StyleSheet.create<AppStyleTypes>({
   },
   reloadTitle: {
     fontWeight: '400',
-    color: '#969696',
+    color: '#969696'
   },
   positionIcon: {
     width: 40,
@@ -294,6 +311,13 @@ const styles = StyleSheet.create<AppStyleTypes>({
     height: 60,
     borderRadius: 50,
     alignItems: 'center'
+  },
+  bgCondition: {
+    position: 'absolute',
+    height: '100%',
+    width: '100%',
+    zIndex: 1,
+    opacity: 0.5
   }
 });
 

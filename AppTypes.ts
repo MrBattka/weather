@@ -21,6 +21,7 @@ export type AppStyleTypes = {
     icon: ImageStyle
     currIcon: ImageStyle
     wrapperCurrIcon: ViewStyle
+    bgCondition: ImageStyle
 }
 
 export type dataTypes = {
