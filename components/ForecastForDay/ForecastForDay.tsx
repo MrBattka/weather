@@ -54,7 +54,13 @@ const ForecastForDay: FC<ForecastForDayTypes> = ({ isOpenForestForDay, setIsOpen
 
     const isCurrHour = (currHour: string, hour: string): boolean => {
         const sliceHour = hour.slice(11, 13)
-        return sliceHour == currHour
+        const fullHour = 0 + currHour
+
+        if (currHour.length === 1) {
+            return sliceHour == fullHour
+        } else {
+            return sliceHour == currHour
+        }
     }
 
     return (
@@ -96,7 +102,7 @@ const ForecastForDay: FC<ForecastForDayTypes> = ({ isOpenForestForDay, setIsOpen
             <ScrollView style={styles.hourlyForecast}>
                 <View style={styles.wrapperHourlyForecast}>
                     <View>
-                    <View style={styles.titleItem}><Text style={styles.item}>Время</Text></View>
+                        <View style={styles.titleItem}><Text style={styles.item}>Время</Text></View>
                         {currForecastDay.map((c: string, i) => (
                             <View style={styles.wrapperHours} key={i}>
                                 <Text style={isCurrHour(currHour, c) && selectDay === 0 ? styles.currItem : styles.item}>
@@ -106,7 +112,7 @@ const ForecastForDay: FC<ForecastForDayTypes> = ({ isOpenForestForDay, setIsOpen
                         ))}
                     </View>
                     <View>
-                    <View style={styles.titleItem}><Text style={styles.item}>Темп</Text></View>
+                        <View style={styles.titleItem}><Text style={styles.item}>Темп</Text></View>
                         {tempForecastDay.map((currTemp, i) => (
                             <View style={styles.wrapperHours} key={i}>
                                 <Text style={styles.item}>{currTemp}°</Text>
@@ -114,7 +120,7 @@ const ForecastForDay: FC<ForecastForDayTypes> = ({ isOpenForestForDay, setIsOpen
                         ))}
                     </View>
                     <View>
-                    <View style={styles.titleItem}><Text style={styles.item}>Ветер</Text></View>
+                        <View style={styles.titleItem}><Text style={styles.item}>Ветер</Text></View>
                         {windSpeedForecastDay.map((winds, i) => (
                             <View style={styles.wrapperWinds} key={i}>
                                 <Text style={styles.item}>
