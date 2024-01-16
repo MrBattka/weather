@@ -1,9 +1,31 @@
 
-export const isDayNow = (setIsDay: React.Dispatch<React.SetStateAction<boolean>>, hour: number): void => {
-    if (hour > 19 || hour < 6) {
-        setIsDay(false)
+export const isDayNow = (setIsDay: React.Dispatch<React.SetStateAction<boolean>>,
+    hour: number, sunrise: null | '', sunset: any): void => {
+    if (sunrise !== null && sunrise !== undefined) {
+
+        const sliceSunrise: any = sunrise?.slice(0, 2)
+        const currHourSunrise = sliceSunrise.replace(/:/gi, '')
+
+        const sliceSunset: any = sunset?.slice(0, 2)
+        const hourSunset12h = sliceSunset.replace(/:/gi, '')
+        const currHourSunset = Number(hourSunset12h) + 12
+        
+        if (hour >= Number(currHourSunset) || hour <= Number(currHourSunrise)) {
+            setIsDay(false)
+        } else {
+            setIsDay(true)
+        }
+    }
+}
+
+export const isCurrHour = (currHour: string, hour: string): boolean => {
+    const sliceHour = hour.slice(11, 13)
+    const fullHour = 0 + currHour
+
+    if (currHour.length === 1) {
+        return sliceHour == fullHour
     } else {
-        setIsDay(true)
+        return sliceHour == currHour
     }
 }
 

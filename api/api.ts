@@ -12,6 +12,35 @@ const geoInstance = axios.create({
   baseURL: `https://geocode-maps.yandex.ru/1.x/`
 })
 
+const sunriseSunset = axios.create({
+  withCredentials: true,
+  baseURL: `https://api.sunrisesunset.io/json`
+})
+
+
+
+export const getSunrise = async (dispatch: React.Dispatch<React.SetStateAction<null>>,
+  latitude: number | undefined, longitude: number | undefined) => {
+  try {
+    const response = sunriseSunset.get(`?lat=${latitude}&lng=${longitude}`)
+    response.then((response) => dispatch(response.data.results.sunrise)
+    );
+  } catch (err: any) {
+    console.log(err)
+  }
+}
+
+export const getSunset = async (dispatch: React.Dispatch<React.SetStateAction<null>>,
+  latitude: number | undefined, longitude: number | undefined) => {
+  try {
+    const response = sunriseSunset.get(`?lat=${latitude}&lng=${longitude}`)
+    response.then((response) => dispatch(response.data.results.sunset)
+    );
+  } catch (err: any) {
+    console.log(err)
+  }
+}
+
 // 44.5978387,33.5549148 - Sevastopol
 export const getLocation = async (dispatch: React.Dispatch<React.SetStateAction<null>>,
   latitude: number | undefined, longitude: number | undefined) => {

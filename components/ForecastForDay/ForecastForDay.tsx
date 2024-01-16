@@ -1,6 +1,6 @@
 import React, { FC, useEffect, useState } from 'react'
 import { ActivityIndicator, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import { currData, currDataForDay, currToDay, currWindForDay, isConditionForCurrDay, kmHInMS } from '../../common/weatherHelpers'
+import { currData, currDataForDay, currToDay, currWindForDay, isConditionForCurrDay, isCurrHour, kmHInMS } from '../../common/weatherHelpers'
 import { ForecastForDayStylesTypes, ForecastForDayTypes } from './ForecastForDayTypes'
 
 const ForecastForDay: FC<ForecastForDayTypes> = ({ isOpenForestForDay, setIsOpenForestForDay,
@@ -50,18 +50,6 @@ const ForecastForDay: FC<ForecastForDayTypes> = ({ isOpenForestForDay, setIsOpen
         <Image style={styles.icon} source={require('../../assets/forecastForDayCondition/thunderWithRain.gif')} />
     const snowImg: React.ReactElement =
         <Image style={styles.icon} source={require('../../assets/forecastForDayCondition/snowGif.gif')} />
-
-
-    const isCurrHour = (currHour: string, hour: string): boolean => {
-        const sliceHour = hour.slice(11, 13)
-        const fullHour = 0 + currHour
-
-        if (currHour.length === 1) {
-            return sliceHour == fullHour
-        } else {
-            return sliceHour == currHour
-        }
-    }
 
     return (
         <View style={styles.wrapper}>
