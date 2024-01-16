@@ -6,7 +6,7 @@ import { ActivityIndicator, Image, StyleSheet, Text, TouchableOpacity, View } fr
 import { AppStyleTypes, dataTypes, dateTypes } from './AppTypes';
 import {
   getCurrentTemp, getForecast,
-  getLocation, getPrecipitation, getTempApparentForDay,
+  getLocation, getPrecipitation, getSunrise, getSunset, getTempApparentForDay,
   getTempForecastForDay, getTimeForecastForDay, getWeatherCode, getWeatherCodeForHourly,
   getWindSpeedForDay, getWindSpeedForHourly
 } from './api/api';
@@ -16,7 +16,7 @@ import ForecastForDay from './components/ForecastForDay/ForecastForDay';
 
 const App: React.FC = () => {
 
-  const [isDay, setIsDay] = useState(false)
+  const [isDay, setIsDay] = useState(true)
   const [forecast, setForecast] = useState([])
   const [weatherCode, setWeatherCode] = useState([])
   const [timeForecastForDay, setTimeForecastForDay] = useState<null>(null)
@@ -37,6 +37,8 @@ const App: React.FC = () => {
   const [tempApparentDay, setTempApparentDay] = useState(null)
   const [location, setLocation] = useState<Location.LocationObjectCoords>()
   const [geo, setGeo] = useState(null)
+  const [sunrise, setSunrise] = useState(null)
+  const [sunset, setSunset] = useState(null)
 
   //   store geo
 
@@ -87,10 +89,8 @@ const App: React.FC = () => {
   const currHour: string = date.getHours().toString()
 
   useEffect(() => {
-    isDayNow(setIsDay, hour)
-  }, [])
-
-  useEffect(() => {
+    getSunrise(setSunrise, location?.latitude, location?.longitude)
+    getSunset(setSunset, location?.latitude, location?.longitude)
     getForecast(setForecast, location?.latitude, location?.longitude)
     getTimeForecastForDay(setTimeForecastForDay, location?.latitude, location?.longitude)
     getTempForecastForDay(setTempForecastForDay, location?.latitude, location?.longitude)
@@ -101,7 +101,9 @@ const App: React.FC = () => {
     getWindSpeedForDay(setWindSpeedForecastDay, location?.latitude, location?.longitude)
     getTempApparentForDay(setTempApparentForecastDay, location?.latitude, location?.longitude)
     getLocation(setGeo, location?.latitude, location?.longitude)
-  }, [getCurrentTemp, getForecast, typeof location === 'object', typeof geo === 'object'])
+    isDayNow(setIsDay, hour, sunrise, sunset)
+  }, [getCurrentTemp, getForecast, 
+    typeof geo === 'object', typeof location === 'object'])
 
   useEffect(() => {
     setHourly(timeForecastForDay)
@@ -121,7 +123,7 @@ const App: React.FC = () => {
     }
     let currentLocation = await Location.getCurrentPositionAsync({})
     if (location !== currentLocation.coords) {
-      setLocation(currentLocation.coords)
+      setLocation(currentLocation.coords) 
     }
   }
 
@@ -191,11 +193,9 @@ const App: React.FC = () => {
       return <Image style={styles.bgCondition} source={require('./assets/gifWrapperCondition/rain.gif')} />
     } else if (weatherCode === 71 || weatherCode === 73 || weatherCode === 75 || weatherCode === 77 ||
       weatherCode === 85 || weatherCode === 86) {
-      return <Image style={styles.bgCondition} source={require('./assets/gifWrapperCondition/snow.gif')} />
+      return <Image style={styles.bgCondition} source={require('./assets/gifWrapperCondition/snow1.gif')} />
     }
   }
-
-  const bgRain: React.ReactElement<Image> = <Image style={styles.bgCondition} source={require('./assets/gifWrapperCondition/rain.gif')} />
 
   return (
     <View style={styles.container}>

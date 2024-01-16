@@ -3,6 +3,7 @@ import { FlexStyle, ImageStyle, TextStyle, ViewStyle } from "react-native";
 export type dateTypes = {
     getDay: () => number
     getHours: () => number
+    getMinutes: () => number
 }
 
 export type AppStyleTypes = {
