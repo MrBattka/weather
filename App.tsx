@@ -70,6 +70,7 @@ const App: React.FC = () => {
         const arrValue = prevGeo.slice(1, -1)
         const result = JSON.parse('{' + arrValue + '}')
         setLocation(result)
+        
       } else {
         getNewPosition()
       }
@@ -100,7 +101,7 @@ const App: React.FC = () => {
     getPrecipitation(setPrecipitationForecastDay, location?.latitude, location?.longitude)
     getWindSpeedForDay(setWindSpeedForecastDay, location?.latitude, location?.longitude)
     getTempApparentForDay(setTempApparentForecastDay, location?.latitude, location?.longitude)
-    getLocation(setGeo, location?.latitude, location?.longitude)
+    getLocation(setGeo, 44.5888, 33.5224)
     isDayNow(setIsDay, hour, sunrise, sunset)
   }, [getCurrentTemp, getForecast, 
     typeof geo === 'object', typeof location === 'object'])
@@ -123,7 +124,7 @@ const App: React.FC = () => {
     }
     let currentLocation = await Location.getCurrentPositionAsync({})
     if (location !== currentLocation.coords) {
-      setLocation(currentLocation.coords) 
+      setLocation(currentLocation.coords)
     }
   }
 
@@ -196,6 +197,7 @@ const App: React.FC = () => {
       return <Image style={styles.bgCondition} source={require('./assets/gifWrapperCondition/snow1.gif')} />
     }
   }
+// console.log(isDay);
 
   return (
     <View style={styles.container}>

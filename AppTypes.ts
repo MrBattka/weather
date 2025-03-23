@@ -7,7 +7,7 @@ export type dateTypes = {
 }
 
 export type AppStyleTypes = {
-    container: FlexStyle
+    container: ViewStyle
     preloader: ImageStyle
     background: ImageStyle
     wrapperMainPage: ViewStyle

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const key2 = '4af3be99-b5d2-405f-b5b5-afbe1b40ca97'
+const key2 = '9e108e13-e7b1-4342-a9fb-f47c475819d7'
 
 const instance = axios.create({
   withCredentials: true,
@@ -46,7 +46,9 @@ export const getLocation = async (dispatch: React.Dispatch<React.SetStateAction<
   latitude: number | undefined, longitude: number | undefined) => {
   try {
     const response = geoInstance.get(`?apikey=${key2}&geocode=${longitude},${latitude}&autoReverseGeocode=true&kind=locality&results=1&format=json`)
-    response.then((response) => dispatch(response.data.response.GeoObjectCollection.featureMember[0]?.GeoObject.name));
+    response.then((response) => dispatch(response.data.response.GeoObjectCollection.featureMember[0]?.GeoObject.name))
+    
+      // 
   } catch (err: any) {
     console.log(err)
   }
